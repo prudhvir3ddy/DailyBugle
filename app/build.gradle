@@ -4,6 +4,27 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+// to read local properties to get API keys
+def properties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    properties.load(localPropertiesFile.newDataInputStream())
+}
+
+//compare between system and local
+def apiNewsToken = properties.getProperty('api.news')!=null
+        ?properties.getProperty('api.news'):System.getenv('API_NEWS')
+
+//signing apps keys
+def keyAliasToken = properties['key.alias']!=null
+        ?properties['key.alias']:System.getenv("KEY_ALIAS")
+def keyPasswordToken = properties['key.password']!=null
+        ?properties['key.password']:System.getenv("KEY_PASSWORD")
+def storeFileToken = file(properties['store.file']!=null
+        ?properties['store.file']:System.getenv("STORE_FILE"))
+def storePasswordToken = properties['store.password']!=null
+        ?properties['store.password']:System.getenv("STORE_PASSWORD")
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -17,29 +38,24 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    // to read system properties in CI
-    def systemEnvToken = System.getenv('API_NEWS')
-
-    // to read local properties to get API keys
-    Properties properties = new Properties()
-    def propertiesFile = project.rootProject.file('local.properties')
-    if (propertiesFile.exists()) {
-        properties.load(propertiesFile.newDataInputStream())
+    signingConfigs {
+        release{
+            keyAlias keyAliasToken
+            keyPassword keyPasswordToken
+            storeFile storeFileToken
+            storePassword storePasswordToken
+        }
     }
-    def localToken = properties.getProperty('api.news')
-
-
-    //compare between system and local
-    def apiNews = localToken!=null?localToken:systemEnvToken
 
     buildTypes {
 
         buildTypes.each {
-            it.buildConfigField("String","apiNews","\"${apiNews}\"")
+            it.buildConfigField("String","apiNews","\"${apiNewsToken}\"")
         }
 
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

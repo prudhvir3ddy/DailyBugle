@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/code
+    working_directory: ~/DailyBugle
     docker:
       - image: circleci/android:api-29
     environment:
@@ -16,6 +16,9 @@ jobs:
       - run:
           name: Add SDK 29
           command: echo yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-29"
+
+      - run: echo $ENCODED_KEYSTORE | base64 --decode >> ${HOME}/DailyBugle/keystore.jks
+      - run: echo 'export STORE_FILE=${HOME}/DailyBugle/keystore.jks' >> $BASH_ENV
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
