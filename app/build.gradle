@@ -20,10 +20,12 @@ def keyAliasToken = properties['key.alias']!=null
         ?properties['key.alias']:System.getenv("KEY_ALIAS")
 def keyPasswordToken = properties['key.password']!=null
         ?properties['key.password']:System.getenv("KEY_PASSWORD")
-def storeFileToken = file(properties['store.file']!=null
-        ?properties['store.file']:System.getenv("STORE_FILE"))
+def storeFileToken = properties['store.file']!=null
+        ?properties['store.file']:System.getenv("STORE_FILE")
 def storePasswordToken = properties['store.password']!=null
         ?properties['store.password']:System.getenv("STORE_PASSWORD")
+
+def isSignConfigExists = keyAliasToken && keyPasswordToken && storeFileToken && storePasswordToken
 
 android {
     compileSdkVersion 29
@@ -39,11 +41,13 @@ android {
     }
 
     signingConfigs {
-        release{
-            keyAlias keyAliasToken
-            keyPassword keyPasswordToken
-            storeFile storeFileToken
-            storePassword storePasswordToken
+        if(isSignConfigExists) {
+            release {
+                keyAlias keyAliasToken
+                keyPassword keyPasswordToken
+                storeFile file(storeFileToken)
+                storePassword storePasswordToken
+            }
         }
     }
 
@@ -55,7 +59,9 @@ android {
 
         release {
             minifyEnabled false
-            signingConfig signingConfigs.release
+            if(isSignConfigExists) {
+                signingConfig signingConfigs.release
+            }
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
