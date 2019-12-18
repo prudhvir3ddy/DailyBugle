@@ -17,7 +17,7 @@ interface NewsApiService{
         @Query("apiKey") apiKey: String
     ): Deferred<News>
 
-    @GET("source")
+    @GET("sources")
     fun getFromSources(
         @Query("apiKey") apiKey: String
     ): Deferred<News>

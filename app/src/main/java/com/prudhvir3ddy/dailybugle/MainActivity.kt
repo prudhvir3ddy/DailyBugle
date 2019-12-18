@@ -1,13 +1,11 @@
 package com.prudhvir3ddy.dailybugle
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.prudhvir3ddy.dailybugle.network.NewsApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import com.prudhvir3ddy.dailybugle.ui.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,20 +13,37 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val viewModelJob = Job()
+//        val viewModelJob = Job()
+//
+//        val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+//
+//        coroutineScope.launch {
+//            val getNewsDeferred = NewsApi.newsService.getEveryThing(BuildConfig.apiNews)
+//            try {
+//
+//                val resultList = getNewsDeferred.await()
+//                Log.d("newsResult", "${resultList.totalResults}")
+//
+//            } catch (e: Exception) {
+//                Log.d("newsResult", e.message!!)
+//            }
+//        }
 
-        val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    }
 
-        coroutineScope.launch {
-            val getNewsDeferred = NewsApi.newsService.getEveryThing(BuildConfig.apiNews)
-            try {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
 
-                val resultList = getNewsDeferred.await()
-                Log.d("newsResult", "${resultList.totalResults}")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-            } catch (e: Exception) {
-                Log.d("newsResult", e.message!!)
-            }
+        if (item.itemId == R.id.menu_item_settings) {
+            startActivity(Intent(this, SettingsActivity::class.java))
+            return true
         }
+        return super.onOptionsItemSelected(item)
+
+
     }
 }

@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 
 // to read local properties to get API keys
@@ -12,18 +13,18 @@ if (localPropertiesFile.exists()) {
 }
 
 //compare between system and local
-def apiNewsToken = properties.getProperty('api.news')!=null
-        ?properties.getProperty('api.news'):System.getenv('API_NEWS')
+def apiNewsToken = properties.getProperty('api.news') != null
+        ? properties.getProperty('api.news') : System.getenv('API_NEWS')
 
 //signing apps keys
-def keyAliasToken = properties['key.alias']!=null
-        ?properties['key.alias']:System.getenv("KEY_ALIAS")
-def keyPasswordToken = properties['key.password']!=null
-        ?properties['key.password']:System.getenv("KEY_PASSWORD")
-def storeFileToken = properties['store.file']!=null
-        ?properties['store.file']:System.getenv("STORE_FILE")
-def storePasswordToken = properties['store.password']!=null
-        ?properties['store.password']:System.getenv("STORE_PASSWORD")
+def keyAliasToken = properties['key.alias'] != null
+        ? properties['key.alias'] : System.getenv("KEY_ALIAS")
+def keyPasswordToken = properties['key.password'] != null
+        ? properties['key.password'] : System.getenv("KEY_PASSWORD")
+def storeFileToken = properties['store.file'] != null
+        ? properties['store.file'] : System.getenv("STORE_FILE")
+def storePasswordToken = properties['store.password'] != null
+        ? properties['store.password'] : System.getenv("STORE_PASSWORD")
 
 def isSignConfigExists = keyAliasToken && keyPasswordToken && storeFileToken && storePasswordToken
 
@@ -44,7 +45,7 @@ android {
         enabled = true
     }
     signingConfigs {
-        if(isSignConfigExists) {
+        if (isSignConfigExists) {
             release {
                 keyAlias keyAliasToken
                 keyPassword keyPasswordToken
@@ -57,12 +58,12 @@ android {
     buildTypes {
 
         buildTypes.each {
-            it.buildConfigField("String","apiNews","\"${apiNewsToken}\"")
+            it.buildConfigField("String", "apiNews", "\"${apiNewsToken}\"")
         }
 
         release {
             minifyEnabled false
-            if(isSignConfigExists) {
+            if (isSignConfigExists) {
                 signingConfig signingConfigs.release
             }
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -95,7 +96,12 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
 
     implementation "com.github.bumptech.glide:glide:$glideVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.preference:preference:1.1.0'
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
+
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
 
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$testVersion"
