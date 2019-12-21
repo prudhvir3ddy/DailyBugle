@@ -13,22 +13,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val viewModelJob = Job()
-//
-//        val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-//
-//        coroutineScope.launch {
-//            val getNewsDeferred = NewsApi.newsService.getEveryThing(BuildConfig.apiNews)
-//            try {
-//
-//                val resultList = getNewsDeferred.await()
-//                Log.d("newsResult", "${resultList.totalResults}")
-//
-//            } catch (e: Exception) {
-//                Log.d("newsResult", e.message!!)
-//            }
-//        }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
