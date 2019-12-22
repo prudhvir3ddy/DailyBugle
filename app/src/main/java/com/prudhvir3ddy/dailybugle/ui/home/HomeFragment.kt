@@ -1,13 +1,16 @@
-package com.prudhvir3ddy.dailybugle.ui
+package com.prudhvir3ddy.dailybugle.ui.home
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.viewmodels.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.view.*
@@ -26,17 +29,38 @@ class HomeFragment : Fragment() {
 
         val viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
+        val newsAdapter = NewsAdapter(activity!!.applicationContext)
+
+        viewModel.getTopHeadLines()
         viewModel.getEverything()
+
+        viewModel.allNews.observe(this, Observer {
+
+            Log.i("newsResultAll", "${it.totalResults ?: 0}")
+        })
+
+        viewModel.topNews.observe(this, Observer {
+
+            newsAdapter.setData(it.articles)
+            Log.i("topNewsAll", "${it.articles.size ?: 0}")
+        })
+
+        rootView.recyclerViewTopNews.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = newsAdapter
+        }
 
         rootView.bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
 
                 R.id.menu_item_search -> {
-                    val action = HomeFragmentDirections.actionHomeFragmentToSearchFragment()
+                    val action =
+                        HomeFragmentDirections.actionHomeFragmentToSearchFragment()
                     findNavController().navigate(action)
                 }
                 R.id.menu_item_save -> {
-                    val action = HomeFragmentDirections.actionHomeFragmentToSaveFragment()
+                    val action =
+                        HomeFragmentDirections.actionHomeFragmentToSaveFragment()
                     findNavController().navigate(action)
                 }
             }

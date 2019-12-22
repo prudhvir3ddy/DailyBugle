@@ -10,7 +10,7 @@ class RetrofitClient{
 
     companion object getRetrofit {
 
-        private val BASE_URL = "https://newsapi.org/v2/"
+        private val BASE_URL = "http://newsapi.org/v2/"
 
         private val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
