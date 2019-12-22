@@ -5,9 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.prudhvir3ddy.dailybugle.R
+import com.prudhvir3ddy.dailybugle.ui.home.NewsAdapter
+import com.prudhvir3ddy.dailybugle.viewmodels.SearchViewModel
+import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
 /**
@@ -18,9 +24,30 @@ class SearchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_search, container, false)
+
+        val viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
+
+        val newsAdapter = NewsAdapter(activity!!.applicationContext)
+
+        rootView.search_input.setOnEditorActionListener { v, actionId, event ->
+
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                viewModel.searchNews(search_input.text.toString())
+            }
+
+            false
+        }
+
+        rootView.recycler_view_search_news.apply {
+            adapter = newsAdapter
+        }
+
+        viewModel.foundNews.observe(this, Observer {
+            newsAdapter.setData(it.articles)
+        })
         rootView.bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
 

@@ -21,7 +21,7 @@
             android:padding="@dimen/space_16">
 
             <TextView
-                android:id="@+id/topNewsLabel"
+                android:id="@+id/top_news_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/top_news_label"
@@ -31,7 +31,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewTopNews"
+                android:id="@+id/recycler_view_top_news"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8"
@@ -39,7 +39,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/topNewsLabel"
+                app:layout_constraintTop_toBottomOf="@+id/top_news_tv"
                 tools:listitem="@layout/item_top_news" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

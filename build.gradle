@@ -10,7 +10,7 @@ buildscript {
         junitVersion = '4.12'
         testVersion = '1.1.1'
         espressoCoreVersion = '3.2.0'
-        materialDesignVersion = '1.2.0-alpha02'
+        materialDesignVersion = '1.2.0-alpha03'
         kotlinCoroutinesVersion = '1.1.0'
         retrofitCoroutinesAdapterVersion = '0.9.2'
         retrofitVersion = '2.7.0'

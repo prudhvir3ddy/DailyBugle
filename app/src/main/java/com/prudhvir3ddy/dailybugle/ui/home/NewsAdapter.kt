@@ -42,7 +42,7 @@ class NewsAdapter(private val context: Context) : RecyclerView.Adapter<NewsAdapt
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val imageView: ImageView = holder.itemView.mainImage
+        val imageView: ImageView = holder.itemView.main_image
         val url: String? = list.get(position).urlToImage
 
         bindImage(imageView, url)

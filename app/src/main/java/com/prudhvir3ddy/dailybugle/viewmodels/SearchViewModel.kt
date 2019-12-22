@@ -12,48 +12,26 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-
-class HomeViewModel : ViewModel(){
-
-    private val _allNews = MutableLiveData<News>()
-
-    val allNews: LiveData<News>
-        get() = _allNews
-
-    private val _topNews = MutableLiveData<News>()
-
-    val topNews: LiveData<News>
-        get() = _topNews
-
+class SearchViewModel : ViewModel() {
 
     private val viewModelJob = Job()
 
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    fun getEverything(){
+    private val _foundNews = MutableLiveData<News>()
+
+    val foundNews: LiveData<News>
+        get() = _foundNews
+
+    fun searchNews(query: String) {
         coroutineScope.launch {
 
-            val getNewsDeferred = NewsApi.newsService.getEveryThing("bitcoin",BuildConfig.apiNews)
+            val getNewsDeferred = NewsApi.newsService.getEveryThing(query, BuildConfig.apiNews)
             try {
                 val resultList = getNewsDeferred.await()
-                _allNews.value = resultList
+                _foundNews.value = resultList
             } catch (e: Exception) {
                 Log.d("newsResult", e.message)
-            }
-        }
-    }
-
-    fun getTopHeadLines() {
-        coroutineScope.launch {
-
-            val getTopHeadLinesDeferred =
-                NewsApi.newsService.getTopHeadlines("IN", BuildConfig.apiNews)
-            try {
-                val resultList = getTopHeadLinesDeferred.await()
-                _topNews.value = resultList
-
-            } catch (e: java.lang.Exception) {
-                Log.d("topNewsResult", e.message)
             }
         }
     }

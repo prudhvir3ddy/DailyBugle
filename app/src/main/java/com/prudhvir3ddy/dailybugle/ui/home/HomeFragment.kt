@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.viewmodels.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.view.*
@@ -45,10 +44,10 @@ class HomeFragment : Fragment() {
             Log.i("topNewsAll", "${it.articles.size ?: 0}")
         })
 
-        rootView.recyclerViewTopNews.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        rootView.recycler_view_top_news.apply {
             adapter = newsAdapter
         }
+
 
         rootView.bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
