@@ -33,7 +33,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application){
 
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    fun getSource(){
+    fun getSources(){
         coroutineScope.launch {
 
             val getSourcesDeferred = NewsApi(getApplication()).newsService.getSources(BuildConfig.apiNews)

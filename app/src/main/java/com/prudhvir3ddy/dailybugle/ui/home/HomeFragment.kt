@@ -29,13 +29,13 @@ class HomeFragment : Fragment() {
         val viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
         val newsAdapter = NewsAdapter(activity!!.applicationContext)
+        val sourceAdapter = SourceAdapter(activity!!.applicationContext)
 
         viewModel.getTopHeadLines()
-        viewModel.getEverything()
+        viewModel.getSources()
 
-        viewModel.allNews.observe(this, Observer {
-
-            Log.i("newsResultAll", "${it.totalResults ?: 0}")
+        viewModel.sources.observe(this, Observer {
+            sourceAdapter.setData(it.sources)
         })
 
         viewModel.topNews.observe(this, Observer {
@@ -44,30 +44,31 @@ class HomeFragment : Fragment() {
             Log.i("topNewsAll", "${it.articles.size ?: 0}")
         })
 
-        rootView.recycler_view_top_news.apply {
-            adapter = newsAdapter
-        }
+        rootView.apply {
 
+            recycler_view_top_news.adapter = newsAdapter
+            recycler_view_sources.adapter = sourceAdapter
 
-        rootView.bottom_navigation.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
+            bottom_navigation.setOnNavigationItemSelectedListener {
+                when (it.itemId) {
 
-                R.id.menu_item_search -> {
-                    val action =
-                        HomeFragmentDirections.actionHomeFragmentToSearchFragment()
-                    findNavController().navigate(action)
+                    R.id.menu_item_search -> {
+                        val action =
+                            HomeFragmentDirections.actionHomeFragmentToSearchFragment()
+                        findNavController().navigate(action)
+                    }
+                    R.id.menu_item_save -> {
+                        val action =
+                            HomeFragmentDirections.actionHomeFragmentToSaveFragment()
+                        findNavController().navigate(action)
+                    }
                 }
-                R.id.menu_item_save -> {
-                    val action =
-                        HomeFragmentDirections.actionHomeFragmentToSaveFragment()
-                    findNavController().navigate(action)
-                }
+                false
             }
-            false
+
         }
 
         return rootView
     }
-
 
 }

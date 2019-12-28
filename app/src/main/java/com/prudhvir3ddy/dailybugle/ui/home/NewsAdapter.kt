@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.bindImage
 import com.prudhvir3ddy.dailybugle.network.data.Articles
-import kotlinx.android.synthetic.main.item_top_news.view.*
+import kotlinx.android.synthetic.main.item_news.view.*
 
-class NewsAdapter(private val context: Context) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
+class NewsAdapter(private val context: Context) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
     private lateinit var list: List<Articles>
 
@@ -20,14 +20,14 @@ class NewsAdapter(private val context: Context) : RecyclerView.Adapter<NewsAdapt
         notifyDataSetChanged()
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+        return NewsViewHolder(
             LayoutInflater.from(context).inflate(
-                R.layout.item_top_news,
+                R.layout.item_news,
                 parent,
                 false
             )
@@ -40,7 +40,7 @@ class NewsAdapter(private val context: Context) : RecyclerView.Adapter<NewsAdapt
         return 0
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
 
         val imageView: ImageView = holder.itemView.main_image
         val url: String? = list.get(position).urlToImage

@@ -25,4 +25,5 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="top_news_label">Top Headlines</string>
     <string name="search_news_label">Search Articles</string>
+    <string name="sources_label">Sources</string>
 </resources>
