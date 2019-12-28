@@ -26,4 +26,5 @@
     <string name="top_news_label">Top Headlines</string>
     <string name="search_news_label">Search Articles</string>
     <string name="sources_label">Sources</string>
+    <string name="no_internet">No Internet Connection</string>
 </resources>

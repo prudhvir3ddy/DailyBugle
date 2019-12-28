@@ -12,6 +12,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
         Glide.with(imgView.context)
             .load(imgUri)
             .centerCrop()
+            .placeholder(R.drawable.loading)
             .into(imgView)
     }
 }

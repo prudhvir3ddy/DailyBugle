@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_homeFragment_to_saveFragment"
             app:destination="@id/saveFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_noInternetFragment"
+            app:destination="@id/noInternetFragment" />
     </fragment>
     <fragment
         android:id="@+id/saveFragment"
@@ -39,5 +42,13 @@
         <action
             android:id="@+id/action_searchFragment_to_saveFragment"
             app:destination="@id/saveFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_noInternetFragment"
+            app:destination="@id/noInternetFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/noInternetFragment"
+        android:name="com.prudhvir3ddy.dailybugle.ui.NoInternetFragment"
+        android:label="fragment_no_internet"
+        tools:layout="@layout/fragment_no_internet" />
 </navigation>

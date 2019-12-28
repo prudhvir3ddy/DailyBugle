@@ -25,6 +25,11 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     val foundNews: LiveData<News>
         get() = _foundNews
 
+    private val _status = MutableLiveData<Boolean>()
+
+    val status: LiveData<Boolean>
+        get() = _status
+
     fun searchNews(query: String) {
         coroutineScope.launch {
 
@@ -33,11 +38,16 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
                 val resultList = getNewsDeferred.await()
                 _foundNews.value = resultList
             } catch (e: Exception) {
-                Log.d("newsResult", e.message)
+                Log.i("searchResult",e.message)
+                if (e.message.equals("HTTP 504 Unsatisfiable Request (only-if-cached)"))
+                    _status.value = true
             }
         }
     }
 
+    fun resetStatus(){
+        _status.value = false
+    }
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()

@@ -28,6 +28,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application){
     val topNews: LiveData<News>
         get() = _topNews
 
+    private val _status = MutableLiveData<Boolean>()
+
+    val status: LiveData<Boolean>
+        get() = _status
 
     private val viewModelJob = Job()
 
@@ -42,6 +46,8 @@ class HomeViewModel(application: Application) : AndroidViewModel(application){
                 _sources.value = resultList
             } catch (e: Exception) {
                 Log.d("newsResult", e.message.toString())
+                if (e.message.equals("HTTP 504 Unsatisfiable Request (only-if-cached)"))
+                    _status.value = true
             }
         }
     }
@@ -59,6 +65,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application){
                 Log.d("topNewsResult", e.message.toString())
             }
         }
+    }
+
+    fun resetStatus(){
+        _status.value = false
     }
 
     override fun onCleared() {

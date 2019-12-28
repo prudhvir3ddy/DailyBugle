@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.prudhvir3ddy.dailybugle.R
+import com.prudhvir3ddy.dailybugle.network.Connection
 import com.prudhvir3ddy.dailybugle.viewmodels.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
@@ -31,17 +32,26 @@ class HomeFragment : Fragment() {
         val newsAdapter = NewsAdapter(activity!!.applicationContext)
         val sourceAdapter = SourceAdapter(activity!!.applicationContext)
 
-        viewModel.getTopHeadLines()
-        viewModel.getSources()
+        viewModel.apply {
+            getTopHeadLines()
+            getSources()
+        }
 
         viewModel.sources.observe(this, Observer {
             sourceAdapter.setData(it.sources)
         })
 
         viewModel.topNews.observe(this, Observer {
-
             newsAdapter.setData(it.articles)
-            Log.i("topNewsAll", "${it.articles.size ?: 0}")
+        })
+
+        viewModel.status.observe(this, Observer {
+            if(it){
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToNoInternetFragment()
+                )
+                viewModel.resetStatus()
+            }
         })
 
         rootView.apply {
