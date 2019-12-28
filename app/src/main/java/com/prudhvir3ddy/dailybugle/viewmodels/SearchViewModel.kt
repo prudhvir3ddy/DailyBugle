@@ -1,6 +1,8 @@
 package com.prudhvir3ddy.dailybugle.viewmodels
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class SearchViewModel : ViewModel() {
+class SearchViewModel(application: Application) : AndroidViewModel(application) {
 
     private val viewModelJob = Job()
 
@@ -26,7 +28,7 @@ class SearchViewModel : ViewModel() {
     fun searchNews(query: String) {
         coroutineScope.launch {
 
-            val getNewsDeferred = NewsApi.newsService.getEveryThing(query, BuildConfig.apiNews)
+            val getNewsDeferred = NewsApi(getApplication()).newsService.getEveryThing(query, BuildConfig.apiNews)
             try {
                 val resultList = getNewsDeferred.await()
                 _foundNews.value = resultList

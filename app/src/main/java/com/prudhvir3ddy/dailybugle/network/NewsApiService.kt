@@ -1,6 +1,8 @@
 package com.prudhvir3ddy.dailybugle.network
 
+import android.content.Context
 import com.prudhvir3ddy.dailybugle.network.data.News
+import com.prudhvir3ddy.dailybugle.network.data.Sources
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -20,14 +22,14 @@ interface NewsApiService{
     ): Deferred<News>
 
     @GET("sources")
-    fun getFromSources(
+    fun getSources(
         @Query("apiKey") apiKey: String
-    ): Deferred<News>
+    ): Deferred<Sources>
 
 }
 
-object NewsApi {
+class NewsApi(context: Context) {
     val newsService: NewsApiService by lazy {
-        RetrofitClient.getRetrofitInstance().create(NewsApiService::class.java)
+        RetrofitClient(context).getRetrofitInstance().create(NewsApiService::class.java)
     }
 }

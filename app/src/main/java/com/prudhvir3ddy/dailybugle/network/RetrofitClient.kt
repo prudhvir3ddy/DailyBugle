@@ -1,29 +1,67 @@
 package com.prudhvir3ddy.dailybugle.network
 
+import android.app.Application
+import android.content.Context
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-class RetrofitClient{
+class RetrofitClient(context: Context){
 
-    companion object getRetrofit {
-
-        private val BASE_URL = "http://newsapi.org/v2/"
+        private val BASE_URL = "https://newsapi.org/v2/"
 
         private val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
 
-        private val retrofit = Retrofit.Builder()
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl(BASE_URL)
-            .build()
+    val cacheSize = (5 * 1024 * 1024).toLong()
+    val myCache = Cache(context.cacheDir, cacheSize)
 
-        fun getRetrofitInstance(): Retrofit {
-            return retrofit
+    val REWRITE_RESPONSE_INTERCEPTOR = Interceptor{
+        var response:Response = it.proceed(it.request())
+        val cacheControl:String? = response.header("Cache-Control")
+        if (cacheControl == null || cacheControl.contains("no-store") || cacheControl.contains("no-cache") ||
+            cacheControl.contains("must-revalidate") || cacheControl.contains("max-age=0")) {
+             response.newBuilder()
+                .removeHeader("Pragma")
+                .header("Cache-Control", "public, max-age=" + 5000)
+                .build();
+        } else {
+             response;
         }
     }
-}
+
+    val REWRITE_RESPONSE_INTERCEPTOR_OFFLINE = Interceptor {
+        var request: Request = it.request()
+        if(!Connection.hasNetwork(context)){
+            request = request.newBuilder()
+                .removeHeader("Pragma")
+                .header("Cache-Control", "public, only-if-cached")
+                .build();
+        }
+        it.proceed(request)
+    }
+    val okHttpClient = OkHttpClient.Builder()
+        .cache(myCache)
+        .addNetworkInterceptor(REWRITE_RESPONSE_INTERCEPTOR)
+        .addInterceptor(REWRITE_RESPONSE_INTERCEPTOR_OFFLINE)
+        .build()
+
+        private var retrofit:Retrofit?=null
+
+        fun getRetrofitInstance(): Retrofit {
+
+            if(retrofit == null) {
+                retrofit = Retrofit.Builder()
+                    .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .baseUrl(BASE_URL)
+                    .client(okHttpClient)
+                    .build()
+            }
+            return retrofit!!
+        }
+    }

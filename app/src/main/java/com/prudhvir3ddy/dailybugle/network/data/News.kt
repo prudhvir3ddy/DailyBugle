@@ -1,5 +1,7 @@
 package com.prudhvir3ddy.dailybugle.network.data
 
+import com.squareup.moshi.Json
+
 data class News(
     val status: String,
     val totalResults: Int,
@@ -8,7 +10,7 @@ data class News(
 )
 
 data class Articles(
-    val source: Source,
+    val source: ArticleSource,
     val author: String?,
     val title: String,
     val description: String?,
@@ -18,7 +20,7 @@ data class Articles(
     val content: String?
 )
 
-data class Source(
+data class ArticleSource(
     val id: String?,
     val name: String
 )
