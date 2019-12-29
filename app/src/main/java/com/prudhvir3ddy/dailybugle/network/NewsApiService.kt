@@ -23,6 +23,7 @@ interface NewsApiService{
 
     @GET("sources")
     fun getSources(
+        @Query("country") country: String,
         @Query("apiKey") apiKey: String
     ): Deferred<Sources>
 

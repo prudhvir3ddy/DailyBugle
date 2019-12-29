@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.network.Connection
 import com.prudhvir3ddy.dailybugle.viewmodels.HomeViewModel
@@ -27,11 +28,15 @@ class HomeFragment : Fragment() {
 
         val viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity!!.applicationContext)
+
+        val country = sharedPreferences.getString("country","")
+
 
         val newsAdapter = NewsAdapter()
         val sourceAdapter = SourceAdapter()
 
-        getData(viewModel)
+        getData(viewModel,country!!)
 
         rootView.apply {
 
@@ -41,7 +46,7 @@ class HomeFragment : Fragment() {
             swipe_refresh.isRefreshing = true
 
             swipe_refresh.setOnRefreshListener {
-                getData(viewModel)
+                getData(viewModel,country)
             }
 
             bottom_navigation.setOnNavigationItemSelectedListener {
@@ -85,10 +90,10 @@ class HomeFragment : Fragment() {
         return rootView
     }
 
-    fun getData(viewModel:HomeViewModel){
+    fun getData(viewModel:HomeViewModel,country: String){
         viewModel.apply {
-            getTopHeadLines()
-            getSources()
+            getTopHeadLines(country)
+            getSources(country)
         }
     }
 

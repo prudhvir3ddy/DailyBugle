@@ -20,6 +20,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application){
 
     private val _sources = MutableLiveData<Sources>()
 
+
     val sources: LiveData<Sources>
         get() = _sources
 
@@ -37,10 +38,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application){
 
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    fun getSources(){
+    fun getSources(country: String){
         coroutineScope.launch {
 
-            val getSourcesDeferred = NewsApi(getApplication()).newsService.getSources(BuildConfig.apiNews)
+            val getSourcesDeferred = NewsApi(getApplication()).newsService.getSources(country,BuildConfig.apiNews)
             try {
                 val resultList = getSourcesDeferred.await()
                 _sources.value = resultList
@@ -52,11 +53,11 @@ class HomeViewModel(application: Application) : AndroidViewModel(application){
         }
     }
 
-    fun getTopHeadLines() {
+    fun getTopHeadLines(country: String) {
         coroutineScope.launch {
 
             val getTopHeadLinesDeferred =
-                NewsApi(getApplication()).newsService.getTopHeadlines("IN", BuildConfig.apiNews)
+                NewsApi(getApplication()).newsService.getTopHeadlines(country, BuildConfig.apiNews)
             try {
                 val resultList = getTopHeadLinesDeferred.await()
                 Log.d("topNewsResult", resultList.status)

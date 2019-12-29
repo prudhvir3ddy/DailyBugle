@@ -13,7 +13,7 @@ class RetrofitClient{
 
     companion object {
 
-        private val BASE_URL = "https://newsapi.org/v2/"
+        private val BASE_URL = "http://newsapi.org/v2/"
 
         private lateinit var retrofit:Retrofit
 
