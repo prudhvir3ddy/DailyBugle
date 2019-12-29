@@ -13,7 +13,7 @@ class RetrofitClient{
 
     companion object {
 
-        private val BASE_URL = "http://newsapi.org/v2/"
+        private val BASE_URL = "https://newsapi.org/v2/"
 
         private lateinit var retrofit:Retrofit
 
@@ -26,7 +26,6 @@ class RetrofitClient{
             if (!::retrofit.isInitialized)
                 retrofit = createRetrofit(context)
 
-            Log.i("retrofit call",""+ retrofit)
             return retrofit
         }
 

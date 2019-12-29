@@ -13,11 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.network.Connection
 import com.prudhvir3ddy.dailybugle.viewmodels.HomeViewModel
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
-/**
- * A simple [Fragment] subclass.
- */
 class HomeFragment : Fragment() {
 
     override fun onCreateView(
@@ -29,35 +27,22 @@ class HomeFragment : Fragment() {
 
         val viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
-        val newsAdapter = NewsAdapter(activity!!.applicationContext)
-        val sourceAdapter = SourceAdapter(activity!!.applicationContext)
 
-        viewModel.apply {
-            getTopHeadLines()
-            getSources()
-        }
+        val newsAdapter = NewsAdapter()
+        val sourceAdapter = SourceAdapter()
 
-        viewModel.sources.observe(this, Observer {
-            sourceAdapter.setData(it.sources)
-        })
-
-        viewModel.topNews.observe(this, Observer {
-            newsAdapter.setData(it.articles)
-        })
-
-        viewModel.status.observe(this, Observer {
-            if(it){
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToNoInternetFragment()
-                )
-                viewModel.resetStatus()
-            }
-        })
+        getData(viewModel)
 
         rootView.apply {
 
             recycler_view_top_news.adapter = newsAdapter
             recycler_view_sources.adapter = sourceAdapter
+
+            swipe_refresh.isRefreshing = true
+
+            swipe_refresh.setOnRefreshListener {
+                getData(viewModel)
+            }
 
             bottom_navigation.setOnNavigationItemSelectedListener {
                 when (it.itemId) {
@@ -78,7 +63,33 @@ class HomeFragment : Fragment() {
 
         }
 
+        viewModel.sources.observe(this, Observer {
+            sourceAdapter.submitList(it.sources)
+        })
+
+        viewModel.topNews.observe(this, Observer {
+            newsAdapter.submitList(it.articles)
+            rootView.swipe_refresh.isRefreshing = false
+        })
+
+        viewModel.status.observe(this, Observer {
+            if(it){
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToNoInternetFragment()
+                )
+                viewModel.resetStatus()
+            }
+        })
+
+
         return rootView
+    }
+
+    fun getData(viewModel:HomeViewModel){
+        viewModel.apply {
+            getTopHeadLines()
+            getSources()
+        }
     }
 
 }

@@ -59,6 +59,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application){
                 NewsApi(getApplication()).newsService.getTopHeadlines("IN", BuildConfig.apiNews)
             try {
                 val resultList = getTopHeadLinesDeferred.await()
+                Log.d("topNewsResult", resultList.status)
                 _topNews.value = resultList
 
             } catch (e: Exception) {

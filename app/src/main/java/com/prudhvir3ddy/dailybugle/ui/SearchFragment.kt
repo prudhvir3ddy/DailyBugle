@@ -16,25 +16,23 @@ import com.prudhvir3ddy.dailybugle.viewmodels.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
-/**
- * A simple [Fragment] subclass.
- */
 class SearchFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
+
         val rootView = inflater.inflate(R.layout.fragment_search, container, false)
 
         val viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
 
-        val newsAdapter = NewsAdapter(activity!!.applicationContext)
+        val newsAdapter = NewsAdapter()
 
         viewModel.foundNews.observe(this, Observer {
-            newsAdapter.setData(it.articles)
+            newsAdapter.submitList(it.articles)
         })
+
 
         viewModel.status.observe(this, Observer {
             if (it) {
@@ -47,10 +45,13 @@ class SearchFragment : Fragment() {
             search_input.setOnEditorActionListener { v, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     viewModel.searchNews(search_input.text.toString())
+                    search_input.text.clear()
                 }
                 false
             }
             recycler_view_search_news.adapter = newsAdapter
+
+
             bottom_navigation.setOnNavigationItemSelectedListener {
                 when (it.itemId) {
 
