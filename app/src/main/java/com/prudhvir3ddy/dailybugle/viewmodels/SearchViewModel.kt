@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.prudhvir3ddy.dailybugle.BuildConfig
 import com.prudhvir3ddy.dailybugle.network.NewsApi
 import com.prudhvir3ddy.dailybugle.network.data.News
@@ -33,21 +32,23 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     fun searchNews(query: String) {
         coroutineScope.launch {
 
-            val getNewsDeferred = NewsApi(getApplication()).newsService.getEveryThing(query, BuildConfig.apiNews)
+            val getNewsDeferred =
+                NewsApi(getApplication()).newsService.getEveryThing(query, BuildConfig.apiNews)
             try {
                 val resultList = getNewsDeferred.await()
                 _foundNews.value = resultList
             } catch (e: Exception) {
-                Log.i("searchResult",e.message)
+                Log.i("searchResult", e.message)
                 if (e.message.equals("HTTP 504 Unsatisfiable Request (only-if-cached)"))
                     _status.value = true
             }
         }
     }
 
-    fun resetStatus(){
+    fun resetStatus() {
         _status.value = false
     }
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()

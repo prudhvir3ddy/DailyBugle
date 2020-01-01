@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.ui.home.NewsAdapter
 import com.prudhvir3ddy.dailybugle.viewmodels.SearchViewModel
-import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
 class SearchFragment : Fragment() {

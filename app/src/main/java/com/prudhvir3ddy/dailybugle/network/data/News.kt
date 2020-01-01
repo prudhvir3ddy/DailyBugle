@@ -1,7 +1,5 @@
 package com.prudhvir3ddy.dailybugle.network.data
 
-import com.squareup.moshi.Json
-
 data class News(
     val status: String,
     val totalResults: Int,

@@ -1,7 +1,6 @@
 package com.prudhvir3ddy.dailybugle.network
 
 import android.content.Context
-import android.util.Log
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -9,13 +8,13 @@ import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-class RetrofitClient{
+class RetrofitClient {
 
     companion object {
 
-        private val BASE_URL = "http://newsapi.org/v2/"
+        private val BASE_URL = "https://newsapi.org/v2/"
 
-        private lateinit var retrofit:Retrofit
+        private lateinit var retrofit: Retrofit
 
         private val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
@@ -35,11 +34,14 @@ class RetrofitClient{
             val myCache = Cache(context.cacheDir, cacheSize)
 
 
-            val REWRITE_RESPONSE_INTERCEPTOR = Interceptor{
-                val response:Response = it.proceed(it.request())
-                val cacheControl:String? = response.header("Cache-Control")
-                if (cacheControl == null || cacheControl.contains("no-store") || cacheControl.contains("no-cache") ||
-                    cacheControl.contains("must-revalidate") || cacheControl.contains("max-age=0")) {
+            val REWRITE_RESPONSE_INTERCEPTOR = Interceptor {
+                val response: Response = it.proceed(it.request())
+                val cacheControl: String? = response.header("Cache-Control")
+                if (cacheControl == null || cacheControl.contains("no-store") || cacheControl.contains(
+                        "no-cache"
+                    ) ||
+                    cacheControl.contains("must-revalidate") || cacheControl.contains("max-age=0")
+                ) {
                     response.newBuilder()
                         .removeHeader("Pragma")
                         .header("Cache-Control", "public, max-age=" + 5000)
@@ -51,7 +53,7 @@ class RetrofitClient{
 
             val REWRITE_RESPONSE_INTERCEPTOR_OFFLINE = Interceptor {
                 var request: Request = it.request()
-                if(!Connection.hasNetwork(context)){
+                if (!Connection.hasNetwork(context)) {
                     request = request.newBuilder()
                         .removeHeader("Pragma")
                         .header("Cache-Control", "public, only-if-cached")
@@ -67,11 +69,11 @@ class RetrofitClient{
                 .build()
 
             retrofit = Retrofit.Builder()
-                    .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                    .addConverterFactory(MoshiConverterFactory.create(moshi))
-                    .baseUrl(BASE_URL)
-                    .client(okHttpClient)
-                    .build()
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .baseUrl(BASE_URL)
+                .client(okHttpClient)
+                .build()
 
             return retrofit
         }

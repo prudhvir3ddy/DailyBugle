@@ -1,6 +1,5 @@
 package com.prudhvir3ddy.dailybugle.ui.home
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import com.prudhvir3ddy.dailybugle.bindImage
 import com.prudhvir3ddy.dailybugle.network.data.Articles
 import kotlinx.android.synthetic.main.item_news.view.*
 
-object NewsDiffCallback: DiffUtil.ItemCallback<Articles>(){
+object NewsDiffCallback : DiffUtil.ItemCallback<Articles>() {
     override fun areItemsTheSame(oldItem: Articles, newItem: Articles): Boolean {
         return oldItem.title == newItem.title
     }
@@ -23,7 +22,8 @@ object NewsDiffCallback: DiffUtil.ItemCallback<Articles>(){
     }
 
 }
-class NewsAdapter : ListAdapter<Articles,NewsAdapter.NewsViewHolder>(
+
+class NewsAdapter : ListAdapter<Articles, NewsAdapter.NewsViewHolder>(
     NewsDiffCallback
 ) {
 
