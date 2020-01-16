@@ -18,8 +18,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
-class HomeViewModel(application: Application) : AndroidViewModel(application),
-    SharedPreferences.OnSharedPreferenceChangeListener {
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _sources = MutableLiveData<Sources>()
 
@@ -39,13 +38,14 @@ class HomeViewModel(application: Application) : AndroidViewModel(application),
     val sharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(application.applicationContext)
 
-    var country = sharedPreferences.getString("country", "")
-
+    var country = sharedPreferences.getString("country", "in")
     private val viewModelJob = Job()
 
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    fun getSources(isCached: String? = null) {
+    fun getSources() {
+
+        Log.d("viewmodel", country)
         coroutineScope.launch {
 
             val getSourcesDeferred =
@@ -62,7 +62,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application),
         }
     }
 
-    fun getTopHeadLines(isCached: String? = null) {
+    fun getTopHeadLines() {
         coroutineScope.launch {
 
             val getTopHeadLinesDeferred =
@@ -85,11 +85,11 @@ class HomeViewModel(application: Application) : AndroidViewModel(application),
         _status.value = false
     }
 
-    fun getData(isCached: String? = null) {
+    fun getData() {
         if (Connection.hasNetwork(getApplication())) {
-            country = sharedPreferences.getString("country", "")
-            getTopHeadLines(isCached)
-            getSources(isCached)
+            country = sharedPreferences.getString("country", "in")
+            getTopHeadLines()
+            getSources()
         } else {
             _status.value = true
         }
@@ -99,14 +99,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application),
         super.onCleared()
         viewModelJob.cancel()
     }
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == "country") {
-            getData()
-        }
-    }
-
-
 
 
 }

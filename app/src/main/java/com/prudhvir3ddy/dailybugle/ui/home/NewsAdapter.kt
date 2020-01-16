@@ -34,7 +34,7 @@ class NewsAdapter : ListAdapter<Articles, NewsAdapter.NewsViewHolder>(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         return NewsViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.item_news,
+                R.layout.item_news_top,
                 parent,
                 false
             )

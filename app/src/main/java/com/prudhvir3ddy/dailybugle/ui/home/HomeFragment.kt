@@ -1,6 +1,7 @@
 package com.prudhvir3ddy.dailybugle.ui.home
 
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.viewmodels.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     lateinit var viewModel: HomeViewModel
 
@@ -59,7 +61,7 @@ class HomeFragment : Fragment() {
             swipe_refresh.isRefreshing = true
 
             swipe_refresh.setOnRefreshListener {
-                viewModel.getData("no-cache")
+                viewModel.getData()
             }
 
             bottom_navigation.setOnNavigationItemSelectedListener {
@@ -84,5 +86,21 @@ class HomeFragment : Fragment() {
         return rootView
     }
 
+    override fun onResume() {
+        super.onResume()
+        PreferenceManager(activity).sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+
+    }
+
+    override fun onDestroy() {
+        PreferenceManager(activity).sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        super.onDestroy()
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == "country") {
+            viewModel.getData()
+        }
+    }
 
 }
