@@ -29,8 +29,8 @@ interface NewsApiService {
 
 }
 
-class NewsApi(context: Context) {
+class NewsApi() {
     val newsService: NewsApiService by lazy {
-        RetrofitClient.getRetrofitInstance(context).create(NewsApiService::class.java)
+        RetrofitClient.getRetrofitInstance().create(NewsApiService::class.java)
     }
 }

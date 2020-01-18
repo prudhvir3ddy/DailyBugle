@@ -1,20 +1,17 @@
 package com.prudhvir3ddy.dailybugle.viewmodels
 
 import android.app.Application
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import com.prudhvir3ddy.dailybugle.BuildConfig
 import com.prudhvir3ddy.dailybugle.network.Connection
 import com.prudhvir3ddy.dailybugle.network.NewsApi
 import com.prudhvir3ddy.dailybugle.network.data.News
 import com.prudhvir3ddy.dailybugle.network.data.Sources
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
@@ -39,17 +36,14 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         PreferenceManager.getDefaultSharedPreferences(application.applicationContext)
 
     var country = sharedPreferences.getString("country", "in")
-    private val viewModelJob = Job()
-
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     fun getSources() {
 
         Log.d("viewmodel", country)
-        coroutineScope.launch {
+        viewModelScope.launch {
 
             val getSourcesDeferred =
-                NewsApi(getApplication()).newsService.getSources(
+                NewsApi().newsService.getSources(
                     country!!,
                     BuildConfig.apiNews
                 )
@@ -63,10 +57,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getTopHeadLines() {
-        coroutineScope.launch {
+        viewModelScope.launch {
 
             val getTopHeadLinesDeferred =
-                NewsApi(getApplication()).newsService.getTopHeadlines(
+                NewsApi().newsService.getTopHeadlines(
                     country!!,
                     BuildConfig.apiNews
                 )
@@ -94,11 +88,5 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             _status.value = true
         }
     }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-
 
 }

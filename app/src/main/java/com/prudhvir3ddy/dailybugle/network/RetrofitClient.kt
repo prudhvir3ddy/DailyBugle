@@ -20,59 +20,20 @@ class RetrofitClient {
             .add(KotlinJsonAdapterFactory())
             .build()
 
-        fun getRetrofitInstance(context: Context): Retrofit {
+        fun getRetrofitInstance(): Retrofit {
 
             if (!::retrofit.isInitialized)
-                retrofit = createRetrofit(context)
+                retrofit = createRetrofit()
 
             return retrofit
         }
 
-        private fun createRetrofit(context: Context): Retrofit {
-
-            val cacheSize = (5 * 1024 * 1024).toLong()
-            val myCache = Cache(context.cacheDir, cacheSize)
-
-
-            val REWRITE_RESPONSE_INTERCEPTOR = Interceptor {
-                val response: Response = it.proceed(it.request())
-                val cacheControl: String? = response.header("Cache-Control")
-                if (cacheControl == null || cacheControl.contains("no-store") || cacheControl.contains(
-                        "no-cache"
-                    ) ||
-                    cacheControl.contains("must-revalidate") || cacheControl.contains("max-age=0")
-                ) {
-                    response.newBuilder()
-                        .removeHeader("Pragma")
-                        .header("Cache-Control", "public, max-age=" + 5000)
-                        .build();
-                } else {
-                    response;
-                }
-            }
-
-            val REWRITE_RESPONSE_INTERCEPTOR_OFFLINE = Interceptor {
-                var request: Request = it.request()
-                if (!Connection.hasNetwork(context)) {
-                    request = request.newBuilder()
-                        .removeHeader("Pragma")
-                        .header("Cache-Control", "public, only-if-cached")
-                        .build();
-                }
-                it.proceed(request)
-            }
-
-            val okHttpClient = OkHttpClient.Builder()
-                .cache(myCache)
-                .addNetworkInterceptor(REWRITE_RESPONSE_INTERCEPTOR)
-                .addInterceptor(REWRITE_RESPONSE_INTERCEPTOR_OFFLINE)
-                .build()
+        private fun createRetrofit(): Retrofit {
 
             retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .baseUrl(BASE_URL)
-                .client(okHttpClient)
                 .build()
 
             return retrofit
