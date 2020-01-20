@@ -9,13 +9,13 @@ import retrofit2.http.Query
 interface NewsApiService {
 
     @GET("everything")
-    fun getEveryThing(
+    fun getEveryThingAsync(
         @Query("q") q: String,
         @Query("apiKey") apiKey: String
     ): Deferred<News>
 
     @GET("top-headlines")
-    fun getTopHeadlines(
+    fun getTopHeadlinesAsync(
         @Query("country") country: String,
         @Query("apiKey") apiKey: String
     ): Deferred<News>

@@ -13,9 +13,9 @@ interface NewsDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(articles: List<DatabaseArticles>)
 
-    @Query("SELECT * FROM articles")
-    suspend fun getAllArticles(): List<DatabaseArticles>
+    @Query("SELECT * FROM articles WHERE country=:country")
+    suspend fun getAllArticles(country: String): List<DatabaseArticles>
 
-    @Query("DELETE FROM articles")
-    suspend fun clear()
+    @Query("DELETE FROM articles WHERE country=:country")
+    suspend fun clear(country: String)
 }

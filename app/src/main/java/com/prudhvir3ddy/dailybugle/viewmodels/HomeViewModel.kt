@@ -1,26 +1,22 @@
 package com.prudhvir3ddy.dailybugle.viewmodels
 
-import android.app.Application
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.*
-import androidx.preference.PreferenceManager
 import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
-import com.prudhvir3ddy.dailybugle.network.Connection
+import com.prudhvir3ddy.dailybugle.network.data.Articles
 import com.prudhvir3ddy.dailybugle.repository.Repository
-import kotlinx.coroutines.flow.DEFAULT_CONCURRENCY_PROPERTY_NAME
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(
-    application: Application
-) : AndroidViewModel(application) {
+class HomeViewModel @Inject constructor(
+    private val repo: Repository,
+    private val sharedPreferences: SharedPreferences
+) : ViewModel() {
 
     init {
-        refreshDataFromRepo()
+        getData()
     }
-
-
-    val repo = Repository(application)
-
 
     private var _topNews= MutableLiveData<List<DatabaseArticles>>()
 
@@ -32,14 +28,12 @@ class HomeViewModel(
     val status: LiveData<Boolean>
         get() = _status
 
-    val sharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(getApplication())
-
-    private fun refreshDataFromRepo() {
+    private fun getDataFromRepo(isCache: Boolean) {
         viewModelScope.launch {
             val country = sharedPreferences.getString("country", "in")
-            repo.getTopHeadLines(country!!)
-            _topNews.value = repo.getData()
+            if(!isCache)  repo.getTopHeadLines(country!!)
+            _topNews.value = repo.getData(country!!)
+            if(_topNews.value!!.isEmpty()) _status.value = true
         }
     }
 
@@ -49,12 +43,11 @@ class HomeViewModel(
     }
 
     fun getData() {
-        if (Connection.hasNetwork(getApplication())) {
-            refreshDataFromRepo()
-        } else {
-            _status.value = true
+        if(repo.getConnection()){
+            getDataFromRepo(false)
+        }
+        else{
+             getDataFromRepo(true)
         }
     }
-
-
 }

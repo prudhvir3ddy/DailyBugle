@@ -22,9 +22,9 @@ class NoInternetFragment : Fragment() {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_no_internet, container, false)
 
-        rootView.retry_button.setOnClickListener({
-            findNavController().navigateUp()
-        })
+        rootView.retry_button.setOnClickListener {
+            findNavController().navigate(NoInternetFragmentDirections.actionNoInternetFragmentToHomeFragment())
+        }
         return rootView
     }
 

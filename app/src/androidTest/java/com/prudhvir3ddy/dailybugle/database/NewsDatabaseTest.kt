@@ -4,9 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.prudhvir3ddy.dailybugle.database.data.ArticleSource
-import com.prudhvir3ddy.dailybugle.database.data.Articles
-import com.prudhvir3ddy.dailybugle.utils.getOrAwaitValue
+import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticleSource
+import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.*
@@ -50,12 +49,13 @@ class NewsDatabaseTest {
 
         val expectedArticles = listOf(
 
-            Articles(
+            DatabaseArticles(
                 author = "prudhvi",
-                source = ArticleSource(
+                source = DatabaseArticleSource(
                     "1",
                     "boo"
                 ),
+                country = "in",
                 title = "The Great",
                 description = "I Said the great",
                 url = "facebook.com",
@@ -67,8 +67,8 @@ class NewsDatabaseTest {
         )
         runBlocking {
             newsDao.insert(expectedArticles)
-            val articles = newsDao.getAllArticles()
-            assertEquals(expectedArticles, articles.getOrAwaitValue())
+            val articles = newsDao.getAllArticles(country = "in")
+            assertEquals(expectedArticles, articles)
         }
     }
 }

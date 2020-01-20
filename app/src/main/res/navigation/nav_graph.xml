@@ -50,5 +50,9 @@
         android:id="@+id/noInternetFragment"
         android:name="com.prudhvir3ddy.dailybugle.ui.NoInternetFragment"
         android:label="fragment_no_internet"
-        tools:layout="@layout/fragment_no_internet" />
+        tools:layout="@layout/fragment_no_internet" >
+        <action
+          android:id="@+id/action_noInternetFragment_to_homeFragment"
+          app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

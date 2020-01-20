@@ -10,8 +10,9 @@ import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
 import com.prudhvir3ddy.dailybugle.network.NewsApi
 import com.prudhvir3ddy.dailybugle.utils.asDatabaseModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SearchViewModel() : ViewModel() {
+class SearchViewModel @Inject constructor() : ViewModel() {
 
     private val _foundNews = MutableLiveData<List<DatabaseArticles>>()
 
@@ -27,7 +28,7 @@ class SearchViewModel() : ViewModel() {
         viewModelScope.launch {
 
             val getNewsDeferred =
-                NewsApi().newsService.getEveryThing(query, BuildConfig.apiNews)
+                NewsApi().newsService.getEveryThingAsync(query, BuildConfig.apiNews)
             try {
                 val resultList = getNewsDeferred.await()
                 Log.d("rsize", "${resultList.articles.size}")

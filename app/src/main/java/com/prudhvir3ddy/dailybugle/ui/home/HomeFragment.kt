@@ -7,35 +7,50 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.preference.PreferenceManager
+import com.prudhvir3ddy.dailybugle.MyApplication
 import com.prudhvir3ddy.dailybugle.R
+import com.prudhvir3ddy.dailybugle.ui.BaseFragment
 import com.prudhvir3ddy.dailybugle.viewmodels.HomeViewModel
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import javax.inject.Inject
 
-class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+class HomeFragment : BaseFragment<HomeViewModel>(),
+    SharedPreferences.OnSharedPreferenceChangeListener {
 
-    lateinit var viewModel: HomeViewModel
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
+
+    override fun getViewModelClass(): Class<HomeViewModel> = HomeViewModel::class.java
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        (context?.applicationContext as MyApplication).appComponent.inject(this)
+
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        // Inflate the layout for this fragment
         val rootView: View = inflater.inflate(R.layout.fragment_home, container, false)
 
-        viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        initRootView(rootView)
+        addObservers()
+        return rootView
+    }
 
-        val newsAdapter = NewsAdapter()
-
+    private fun addObservers() {
         viewModel.topNews.observe(viewLifecycleOwner, Observer {
-            Log.d("sizee",it.size.toString())
-            newsAdapter.submitList(it)
-            rootView.swipe_refresh.isRefreshing = false
+            val adapter = recycler_view_top_news.adapter as NewsAdapter
+            adapter.apply {
+                submitList(it)
+            }
+            swipe_refresh.isRefreshing = false
         })
 
         viewModel.status.observe(this, Observer {
@@ -46,12 +61,14 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
                 viewModel.resetStatus()
             }
         })
+    }
 
+    fun initRootView(rootView: View) {
+        val newsAdapter = NewsAdapter()
 
         rootView.apply {
 
             recycler_view_top_news.adapter = newsAdapter
-            //recycler_view_sources.adapter = sourceAdapter
 
             swipe_refresh.isRefreshing = true
 
@@ -78,17 +95,16 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
 
         }
 
-        return rootView
     }
 
     override fun onResume() {
         super.onResume()
-        PreferenceManager(activity).sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
 
     }
 
     override fun onDestroy() {
-        PreferenceManager(activity).sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
         super.onDestroy()
     }
 
@@ -97,5 +113,6 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
             viewModel.getData()
         }
     }
+
 
 }

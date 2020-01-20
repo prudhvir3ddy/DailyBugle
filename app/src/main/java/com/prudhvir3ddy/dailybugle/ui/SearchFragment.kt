@@ -6,16 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.prudhvir3ddy.dailybugle.MyApplication
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.ui.home.NewsAdapter
 import com.prudhvir3ddy.dailybugle.viewmodels.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
-class SearchFragment : Fragment() {
+class SearchFragment : BaseFragment<SearchViewModel>() {
+
+    override fun getViewModelClass(): Class<SearchViewModel> = SearchViewModel::class.java
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        (context?.applicationContext as MyApplication).appComponent.inject(this)
+
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,8 +31,6 @@ class SearchFragment : Fragment() {
     ): View {
 
         val rootView = inflater.inflate(R.layout.fragment_search, container, false)
-
-        val viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
 
         val newsAdapter = NewsAdapter()
 
