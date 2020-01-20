@@ -29,7 +29,7 @@ class SearchFragment : Fragment() {
         val newsAdapter = NewsAdapter()
 
         viewModel.foundNews.observe(this, Observer {
-            newsAdapter.submitList(it.articles)
+            newsAdapter.submitList(it)
         })
 
 

@@ -3,6 +3,7 @@ package com.prudhvir3ddy.dailybugle.ui.home
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,23 +24,17 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         val rootView: View = inflater.inflate(R.layout.fragment_home, container, false)
 
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
         val newsAdapter = NewsAdapter()
-        val sourceAdapter = SourceAdapter()
 
-        viewModel.getData()
-
-        viewModel.sources.observe(this, Observer {
-            sourceAdapter.submitList(it.sources)
-            rootView.swipe_refresh.isRefreshing = false
-        })
-
-        viewModel.topNews.observe(this, Observer {
-            newsAdapter.submitList(it.articles)
+        viewModel.topNews.observe(viewLifecycleOwner, Observer {
+            Log.d("sizee",it.size.toString())
+            newsAdapter.submitList(it)
             rootView.swipe_refresh.isRefreshing = false
         })
 
@@ -56,7 +51,7 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
         rootView.apply {
 
             recycler_view_top_news.adapter = newsAdapter
-            recycler_view_sources.adapter = sourceAdapter
+            //recycler_view_sources.adapter = sourceAdapter
 
             swipe_refresh.isRefreshing = true
 

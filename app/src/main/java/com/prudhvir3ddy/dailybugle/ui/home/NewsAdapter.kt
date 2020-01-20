@@ -9,21 +9,22 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.bindImage
-import com.prudhvir3ddy.dailybugle.network.data.Articles
+import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
+
 import kotlinx.android.synthetic.main.item_news.view.*
 
-object NewsDiffCallback : DiffUtil.ItemCallback<Articles>() {
-    override fun areItemsTheSame(oldItem: Articles, newItem: Articles): Boolean {
+object NewsDiffCallback : DiffUtil.ItemCallback<DatabaseArticles>() {
+    override fun areItemsTheSame(oldItem: DatabaseArticles, newItem: DatabaseArticles): Boolean {
         return oldItem.title == newItem.title
     }
 
-    override fun areContentsTheSame(oldItem: Articles, newItem: Articles): Boolean {
+    override fun areContentsTheSame(oldItem: DatabaseArticles, newItem: DatabaseArticles): Boolean {
         return oldItem == newItem
     }
 
 }
 
-class NewsAdapter : ListAdapter<Articles, NewsAdapter.NewsViewHolder>(
+class NewsAdapter : ListAdapter<DatabaseArticles, NewsAdapter.NewsViewHolder>(
     NewsDiffCallback
 ) {
 
@@ -34,7 +35,7 @@ class NewsAdapter : ListAdapter<Articles, NewsAdapter.NewsViewHolder>(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         return NewsViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.item_news_top,
+                R.layout.item_news,
                 parent,
                 false
             )

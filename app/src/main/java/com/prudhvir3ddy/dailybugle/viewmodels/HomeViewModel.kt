@@ -2,30 +2,30 @@ package com.prudhvir3ddy.dailybugle.viewmodels
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
-import com.prudhvir3ddy.dailybugle.BuildConfig
+import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
 import com.prudhvir3ddy.dailybugle.network.Connection
-import com.prudhvir3ddy.dailybugle.network.NewsApi
-import com.prudhvir3ddy.dailybugle.network.data.News
-import com.prudhvir3ddy.dailybugle.network.data.Sources
+import com.prudhvir3ddy.dailybugle.repository.Repository
+import kotlinx.coroutines.flow.DEFAULT_CONCURRENCY_PROPERTY_NAME
 import kotlinx.coroutines.launch
 
+class HomeViewModel(
+    application: Application
+) : AndroidViewModel(application) {
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
+    init {
+        refreshDataFromRepo()
+    }
 
-    private val _sources = MutableLiveData<Sources>()
 
-    val sources: LiveData<Sources>
-        get() = _sources
+    val repo = Repository(application)
 
-    private val _topNews = MutableLiveData<News>()
 
-    val topNews: LiveData<News>
-        get() = _topNews
+    private var _topNews= MutableLiveData<List<DatabaseArticles>>()
+
+    val topNews: LiveData<List<DatabaseArticles>>
+    get() = _topNews
 
     private val _status = MutableLiveData<Boolean>()
 
@@ -33,47 +33,16 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         get() = _status
 
     val sharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(application.applicationContext)
+        PreferenceManager.getDefaultSharedPreferences(getApplication())
 
-    var country = sharedPreferences.getString("country", "in")
-
-    fun getSources() {
-
-        Log.d("viewmodel", country)
+    private fun refreshDataFromRepo() {
         viewModelScope.launch {
-
-            val getSourcesDeferred =
-                NewsApi().newsService.getSources(
-                    country!!,
-                    BuildConfig.apiNews
-                )
-            try {
-                val resultList = getSourcesDeferred.await()
-                _sources.value = resultList
-            } catch (e: Exception) {
-                Log.d("newsResult", e.message.toString())
-            }
+            val country = sharedPreferences.getString("country", "in")
+            repo.getTopHeadLines(country!!)
+            _topNews.value = repo.getData()
         }
     }
 
-    fun getTopHeadLines() {
-        viewModelScope.launch {
-
-            val getTopHeadLinesDeferred =
-                NewsApi().newsService.getTopHeadlines(
-                    country!!,
-                    BuildConfig.apiNews
-                )
-            try {
-                val resultList = getTopHeadLinesDeferred.await()
-                Log.d("topNewsResult", resultList.status)
-                _topNews.value = resultList
-
-            } catch (e: Exception) {
-                Log.d("topNewsResult", e.message.toString())
-            }
-        }
-    }
 
     fun resetStatus() {
         _status.value = false
@@ -81,12 +50,11 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getData() {
         if (Connection.hasNetwork(getApplication())) {
-            country = sharedPreferences.getString("country", "in")
-            getTopHeadLines()
-            getSources()
+            refreshDataFromRepo()
         } else {
             _status.value = true
         }
     }
+
 
 }
