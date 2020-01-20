@@ -21,9 +21,3 @@ interface NewsApiService {
     ): Deferred<News>
 
 }
-
-class NewsApi {
-    val newsService: NewsApiService by lazy {
-        RetrofitClient.getRetrofitInstance().create(NewsApiService::class.java)
-    }
-}

@@ -7,12 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prudhvir3ddy.dailybugle.BuildConfig
 import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
-import com.prudhvir3ddy.dailybugle.network.NewsApi
+import com.prudhvir3ddy.dailybugle.network.NewsApiService
 import com.prudhvir3ddy.dailybugle.utils.asDatabaseModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SearchViewModel @Inject constructor() : ViewModel() {
+class SearchViewModel @Inject constructor(
+    private val newsApiService: NewsApiService
+) : ViewModel() {
 
     private val _foundNews = MutableLiveData<List<DatabaseArticles>>()
 
@@ -28,15 +30,13 @@ class SearchViewModel @Inject constructor() : ViewModel() {
         viewModelScope.launch {
 
             val getNewsDeferred =
-                NewsApi().newsService.getEveryThingAsync(query, BuildConfig.apiNews)
+                newsApiService.getEveryThingAsync(query, BuildConfig.apiNews)
             try {
                 val resultList = getNewsDeferred.await()
-                Log.d("rsize", "${resultList.articles.size}")
                 _foundNews.value = resultList.articles.map {
                     it.asDatabaseModel("in")
                 }
             } catch (e: Exception) {
-                Log.d("boo","${e.toString()}")
                 if (e.message.equals("HTTP 504 Unsatisfiable Request (only-if-cached)"))
                     _status.value = true
             }
