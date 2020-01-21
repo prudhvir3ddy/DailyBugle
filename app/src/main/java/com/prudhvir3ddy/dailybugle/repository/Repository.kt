@@ -8,9 +8,8 @@ import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
 import com.prudhvir3ddy.dailybugle.network.Connection
 import com.prudhvir3ddy.dailybugle.network.NewsApiService
 import com.prudhvir3ddy.dailybugle.utils.asDatabaseModel
-import javax.inject.Inject
 
-class Repository @Inject constructor(
+class Repository constructor(
     private val database: NewsDao,
     private val context: Context,
     private val newsApiService: NewsApiService
