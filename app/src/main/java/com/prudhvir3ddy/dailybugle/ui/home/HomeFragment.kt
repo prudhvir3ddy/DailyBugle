@@ -13,23 +13,11 @@ import com.prudhvir3ddy.dailybugle.viewmodels.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
-class HomeFragment : BaseFragment<HomeViewModel>(),
-    SharedPreferences.OnSharedPreferenceChangeListener {
+class HomeFragment : BaseFragment<HomeViewModel>() {
 
-  @Inject
-  lateinit var sharedPreferences: SharedPreferences
-
-  override fun getViewModelClass(): Class<HomeViewModel> = HomeViewModel::class.java
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    (context?.applicationContext as MyApplication).appComponent.inject(this)
-
-    super.onCreate(savedInstanceState)
-  }
 
   override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
+    inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
 
@@ -42,17 +30,17 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
   private fun addObservers() {
     viewModel.topNews.observe(viewLifecycleOwner, Observer {
-      val adapter = recycler_view_top_news.adapter as TopHeadlinesAdapter
+      val adapter = recycler_view_top_news.adapter as NewsAdapter
       adapter.apply {
         submitList(it)
       }
       swipe_refresh.isRefreshing = false
     })
 
-      viewModel.status.observe(viewLifecycleOwner, Observer {
+    viewModel.status.observe(viewLifecycleOwner, Observer {
       if (it) {
         findNavController().navigate(
-            HomeFragmentDirections.actionHomeFragmentToNoInternetFragment()
+          HomeFragmentDirections.actionHomeFragmentToNoInternetFragment()
         )
         viewModel.resetStatus()
       }
@@ -60,7 +48,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
   }
 
   fun initRootView(rootView: View) {
-    val newsAdapter = TopHeadlinesAdapter()
+    val newsAdapter = NewsAdapter()
 
     rootView.apply {
 
@@ -93,24 +81,5 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
   }
 
-  override fun onResume() {
-    super.onResume()
-    sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-
-  }
-
-  override fun onDestroy() {
-    sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
-    super.onDestroy()
-  }
-
-  override fun onSharedPreferenceChanged(
-    sharedPreferences: SharedPreferences?,
-    key: String?
-  ) {
-    if (key == "country") {
-      viewModel.getData()
-    }
-  }
-
+  override fun getViewModelClass(): Class<HomeViewModel> = HomeViewModel::class.java
 }
