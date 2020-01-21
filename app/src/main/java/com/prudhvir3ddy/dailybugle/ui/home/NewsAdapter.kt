@@ -28,9 +28,7 @@ class NewsAdapter : ListAdapter<DatabaseArticles, NewsAdapter.NewsViewHolder>(
     NewsDiffCallback
 ) {
 
-    class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    }
+    class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         return NewsViewHolder(

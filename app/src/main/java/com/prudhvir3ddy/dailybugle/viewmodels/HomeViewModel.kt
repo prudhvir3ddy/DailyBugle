@@ -28,6 +28,11 @@ class HomeViewModel @Inject constructor(
     val status: LiveData<Boolean>
         get() = _status
 
+    /**
+     * if user is connected to internet he will get the updated data from the server
+     * if user is not connected to internet then will search in cache if data is available
+     * if there is no data in cache will show no internet screen
+     */
     private fun getDataFromRepo(isCache: Boolean) {
         viewModelScope.launch {
             val country = sharedPreferences.getString("country", "in")

@@ -28,6 +28,20 @@ data class DatabaseArticles(
     val content: String?
 )
 
+@Entity(tableName = "saved_articles")
+data class SavedArticles(
+    val source: DatabaseArticleSource,
+    val author: String?,
+    val title: String,
+    val description: String?,
+    val country: String,
+    @PrimaryKey
+    val url: String,
+    val urlToImage: String?,
+    val publishedAt: String,
+    val content: String?
+)
+
 @JsonClass(generateAdapter = true)
 data class DatabaseArticleSource(
     val id: String?,
