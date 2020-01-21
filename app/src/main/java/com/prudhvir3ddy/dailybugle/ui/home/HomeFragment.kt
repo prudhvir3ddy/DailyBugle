@@ -1,7 +1,6 @@
 package com.prudhvir3ddy.dailybugle.ui.home
 
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,20 +12,13 @@ import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.viewmodels.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment(),
-    SharedPreferences.OnSharedPreferenceChangeListener {
-
-    val sharedPreferences: SharedPreferences by inject()
+class HomeFragment : Fragment() {
 
 
     val viewModel: HomeViewModel by viewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -92,23 +84,4 @@ class HomeFragment : Fragment(),
         }
 
     }
-
-    override fun onResume() {
-        super.onResume()
-        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-
-    }
-
-    override fun onDestroy() {
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
-        super.onDestroy()
-    }
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == "country") {
-            viewModel.getData()
-        }
-    }
-
-
 }

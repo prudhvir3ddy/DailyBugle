@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticleSource
-import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
+import com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.*
@@ -17,7 +17,7 @@ import java.io.IOException
 import java.lang.Exception
 
 @RunWith(AndroidJUnit4::class)
-class NewsDatabaseTest {
+class ResponseNewsDatabaseTest {
 
     private lateinit var newsDao: NewsDao
     private lateinit var newsDatabase: NewsDatabase
@@ -49,7 +49,7 @@ class NewsDatabaseTest {
 
         val expectedArticles = listOf(
 
-            DatabaseArticles(
+            UIDatabaseArticles(
                 author = "prudhvi",
                 source = DatabaseArticleSource(
                     "1",

@@ -9,12 +9,12 @@ import com.squareup.moshi.Moshi
 data class DatabaseNews(
     val status: String,
     val totalResults: Int,
-    val articles: List<DatabaseArticles>
+    val articles: List<UIDatabaseArticles>
 
 )
 
 @Entity(tableName = "articles")
-data class DatabaseArticles(
+data class UIDatabaseArticles(
     val source: DatabaseArticleSource,
     val author: String?,
     val title: String,
@@ -47,9 +47,9 @@ data class DatabaseArticleSource(
     val name: String
 )
 
-class Converters{
+class Converters {
     @TypeConverter
-    fun fromArticleSourceToJson(value: DatabaseArticleSource): String{
+    fun fromArticleSourceToJson(value: DatabaseArticleSource): String {
         val moshi = Moshi.Builder().build()
         val jsonAdapter = moshi.adapter(DatabaseArticleSource::class.java)
 

@@ -1,13 +1,13 @@
 package com.prudhvir3ddy.dailybugle.network.data
 
-data class News(
+data class ResponseNews(
     val status: String,
     val totalResults: Int,
-    val articles: List<Articles>
+    val articles: List<ResponseArticles>
 
 )
 
-data class Articles(
+data class ResponseArticles(
     val source: ArticleSource,
     val author: String?,
     val title: String,

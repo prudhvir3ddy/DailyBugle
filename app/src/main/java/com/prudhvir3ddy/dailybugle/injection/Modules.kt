@@ -40,7 +40,7 @@ val viewModelModule = module {
 
 val repositoryModule = module {
 
-    single {
+    factory {
         Repository(get(),get(), get())
     }
 }

@@ -6,9 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.prudhvir3ddy.dailybugle.database.data.Converters
-import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
+import com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles
 
-@Database(entities = [DatabaseArticles::class], version = 1, exportSchema = false)
+@Database(entities = [UIDatabaseArticles::class], version = 1, exportSchema = false)
 @TypeConverters(value = [Converters::class])
 abstract class NewsDatabase : RoomDatabase(){
 

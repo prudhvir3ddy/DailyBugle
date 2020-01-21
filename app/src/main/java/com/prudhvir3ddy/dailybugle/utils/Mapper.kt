@@ -1,12 +1,12 @@
 package com.prudhvir3ddy.dailybugle.utils
 
 import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticleSource
-import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
+import com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles
 import com.prudhvir3ddy.dailybugle.network.data.ArticleSource
-import com.prudhvir3ddy.dailybugle.network.data.Articles
+import com.prudhvir3ddy.dailybugle.network.data.ResponseArticles
 
-fun Articles.asDatabaseModel(country: String?): DatabaseArticles {
-    return DatabaseArticles (
+fun ResponseArticles.asDatabaseModel(country: String?): UIDatabaseArticles {
+    return UIDatabaseArticles (
             url = url,
             title = title,
             description = description,

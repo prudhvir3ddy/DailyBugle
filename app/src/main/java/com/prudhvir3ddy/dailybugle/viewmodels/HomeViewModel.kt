@@ -1,29 +1,34 @@
 package com.prudhvir3ddy.dailybugle.viewmodels
 
 import android.content.SharedPreferences
-import androidx.lifecycle.*
-import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles
 import com.prudhvir3ddy.dailybugle.repository.Repository
 import kotlinx.coroutines.launch
 
-class HomeViewModel (
+class HomeViewModel(
     private val repo: Repository,
     private val sharedPreferences: SharedPreferences
-) : ViewModel() {
+) : ViewModel(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    init {
-        getData()
-    }
+    private var _topNews = MutableLiveData<List<UIDatabaseArticles>>()
 
-    private var _topNews= MutableLiveData<List<DatabaseArticles>>()
-
-    val topNews: LiveData<List<DatabaseArticles>>
-    get() = _topNews
+    val topNews: LiveData<List<UIDatabaseArticles>>
+        get() = _topNews
 
     private val _status = MutableLiveData<Boolean>()
 
     val status: LiveData<Boolean>
         get() = _status
+
+    init {
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        getData()
+    }
+
 
     /**
      * if user is connected to internet he will get the updated data from the server
@@ -33,23 +38,32 @@ class HomeViewModel (
     private fun getDataFromRepo(isCache: Boolean) {
         viewModelScope.launch {
             val country = sharedPreferences.getString("country", "in")
-            if(!isCache)  repo.getTopHeadLines(country!!)
+            if (!isCache) repo.getTopHeadLines(country!!)
             _topNews.value = repo.getData(country!!)
-            if(_topNews.value!!.isEmpty()) _status.value = true
+            if (_topNews.value!!.isEmpty()) _status.value = true
         }
     }
 
+    override fun onCleared() {
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        super.onCleared()
+    }
 
     fun resetStatus() {
         _status.value = false
     }
 
     fun getData() {
-        if(repo.getConnection()){
+        if (repo.getConnection()) {
             getDataFromRepo(false)
+        } else {
+            getDataFromRepo(true)
         }
-        else{
-             getDataFromRepo(true)
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == "country") { // use global constants
+            getData()
         }
     }
 }
