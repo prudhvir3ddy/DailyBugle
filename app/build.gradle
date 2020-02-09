@@ -101,9 +101,14 @@ dependencies {
     // Kotlin + coroutines
     implementation "androidx.work:work-runtime-ktx:$workVersion"
 
-    //dagger
-    implementation "com.google.dagger:dagger:$daggerVersion"
-    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    //koin
+    // Koin AndroidX Scope features
+    implementation "org.koin:koin-androidx-scope:$koinVersion"
+// Koin AndroidX ViewModel features
+    implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
+// Koin AndroidX Experimental features
+    implementation "org.koin:koin-androidx-ext:$koinVersion"
+
 
     //glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"

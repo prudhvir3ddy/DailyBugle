@@ -3,7 +3,6 @@ package com.prudhvir3ddy.dailybugle.database.data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
-import com.prudhvir3ddy.dailybugle.network.data.News
 import com.squareup.moshi.JsonClass
 import com.squareup.moshi.Moshi
 

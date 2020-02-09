@@ -3,32 +3,28 @@ package com.prudhvir3ddy.dailybugle.ui.home
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.prudhvir3ddy.dailybugle.MyApplication
 import com.prudhvir3ddy.dailybugle.R
-import com.prudhvir3ddy.dailybugle.ui.BaseFragment
 import com.prudhvir3ddy.dailybugle.viewmodels.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : BaseFragment<HomeViewModel>(),
+class HomeFragment : Fragment(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
+    val sharedPreferences: SharedPreferences by inject()
 
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
 
-    override fun getViewModelClass(): Class<HomeViewModel> = HomeViewModel::class.java
+    val viewModel: HomeViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (context?.applicationContext as MyApplication).appComponent.inject(this)
-
         super.onCreate(savedInstanceState)
     }
 

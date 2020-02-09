@@ -1,15 +1,12 @@
 package com.prudhvir3ddy.dailybugle.viewmodels
 
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.*
 import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
-import com.prudhvir3ddy.dailybugle.network.data.Articles
 import com.prudhvir3ddy.dailybugle.repository.Repository
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(
+class HomeViewModel (
     private val repo: Repository,
     private val sharedPreferences: SharedPreferences
 ) : ViewModel() {

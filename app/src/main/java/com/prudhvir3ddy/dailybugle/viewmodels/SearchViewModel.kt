@@ -1,6 +1,5 @@
 package com.prudhvir3ddy.dailybugle.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,9 +9,8 @@ import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
 import com.prudhvir3ddy.dailybugle.network.NewsApiService
 import com.prudhvir3ddy.dailybugle.utils.asDatabaseModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class SearchViewModel @Inject constructor(
+class SearchViewModel (
     private val newsApiService: NewsApiService
 ) : ViewModel() {
 
