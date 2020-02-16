@@ -8,13 +8,12 @@ import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticleSource
 import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
 import kotlinx.coroutines.runBlocking
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
-import java.lang.Exception
 
 @RunWith(AndroidJUnit4::class)
 class NewsDatabaseTest {
@@ -26,9 +25,10 @@ class NewsDatabaseTest {
     val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before
-    fun createDb(){
+    fun createDb() {
 
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val context = InstrumentationRegistry.getInstrumentation()
+            .targetContext
 
         newsDatabase = Room.inMemoryDatabaseBuilder(context, NewsDatabase::class.java)
             .allowMainThreadQueries()
@@ -39,13 +39,13 @@ class NewsDatabaseTest {
 
     @After
     @Throws(IOException::class)
-    fun closeDb(){
+    fun closeDb() {
         newsDatabase.close()
     }
 
     @Test
     @Throws(Exception::class)
-    fun insertAndGetNews(){
+    fun insertAndGetNews() {
 
         val expectedArticles = listOf(
 

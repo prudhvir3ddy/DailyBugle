@@ -1,6 +1,5 @@
 package com.prudhvir3ddy.dailybugle.ui
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,17 +15,19 @@ import kotlinx.android.synthetic.main.fragment_no_internet.view.*
 class NoInternetFragment : Fragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_no_internet, container, false)
 
         rootView.retry_button.setOnClickListener {
-            findNavController().navigate(NoInternetFragmentDirections.actionNoInternetFragmentToHomeFragment())
+            findNavController().navigate(
+                NoInternetFragmentDirections.actionNoInternetFragmentToHomeFragment()
+            )
         }
         return rootView
     }
-
 
 }

@@ -1,6 +1,5 @@
 package com.prudhvir3ddy.dailybugle.ui
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,8 @@ import kotlinx.android.synthetic.main.fragment_save.view.*
 class SaveFragment : Fragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -39,6 +39,5 @@ class SaveFragment : Fragment() {
 
         return rootView
     }
-
 
 }

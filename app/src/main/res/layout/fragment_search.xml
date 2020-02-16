@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-  tools:context=".ui.search.SearchFragment">
+    tools:context=".ui.search.SearchFragment">
 
     <data>
 
         <variable
             name="viewModel"
-          type="com.prudhvir3ddy.dailybugle.ui.search.SearchViewModel" />
+            type="com.prudhvir3ddy.dailybugle.ui.search.SearchViewModel" />
     </data>
 
     <FrameLayout

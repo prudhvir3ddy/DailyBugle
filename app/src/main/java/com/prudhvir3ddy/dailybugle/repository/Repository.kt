@@ -1,7 +1,6 @@
 package com.prudhvir3ddy.dailybugle.repository
 
 import android.content.Context
-import android.util.Log
 import com.prudhvir3ddy.dailybugle.BuildConfig
 import com.prudhvir3ddy.dailybugle.database.NewsDao
 import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
@@ -15,33 +14,27 @@ class Repository @Inject constructor(
     private val context: Context,
     private val newsApiService: NewsApiService
 ) {
-    suspend fun getTopHeadLines(country: String){
+    suspend fun getTopHeadLines(country: String) {
         val getTopHeadLinesDeferred =
             newsApiService.getTopHeadlinesAsync(
                 country,
                 BuildConfig.apiNews
             )
-        try {
-            val resultList = getTopHeadLinesDeferred.await()
-            database.clear(country)
-            val listResult = resultList.articles.map {
-                it.asDatabaseModel(country)
-            }
-            database.insert(listResult)
-        } catch (e: Exception) {
-            Log.d("topNewsResult", e.message.toString())
+        val resultList = getTopHeadLinesDeferred.body()
+        database.clear(country)
+        val listResult = resultList?.articles?.map {
+            it.asDatabaseModel(country)
         }
+        database.insert(listResult!!)
     }
 
-     suspend fun getData(country: String): List<DatabaseArticles>{
+    suspend fun getData(country: String): List<DatabaseArticles> {
         return database.getAllArticles(country)
     }
 
-    fun getConnection():Boolean {
+    fun getConnection(): Boolean {
         return Connection.hasNetwork(context)
     }
-
-
 
 }
 

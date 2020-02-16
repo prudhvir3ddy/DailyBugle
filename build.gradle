@@ -1,12 +1,12 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext{
+    ext {
         kotlinVersion = '1.3.61'
+        coreKtxVersion = '1.2.0'
         appCompatVersion = '1.1.0'
         constraintLayoutVersion = '1.1.3'
-        lifecycleVersion = '2.1.0'
-        coreKtxVersion = '1.1.0'
+        lifecycleVersion = '2.2.0'
         androidXTestCoreVersion = '1.2.0'
         androidXTestExtKotlinRunnerVersion = '1.1.1'
         androidXTestRulesVersion = '1.2.0-beta01'
@@ -16,22 +16,21 @@ buildscript {
         mockitoVersion = '2.8.9'
         robolectricVersion = '4.3.1'
         espressoVersion = '3.2.0-beta01'
-        materialDesignVersion = '1.2.0-alpha03'
+        materialDesignVersion = '1.2.0-alpha04'
         kotlinCoroutinesVersion = '1.1.0'
         retrofitCoroutinesAdapterVersion = '0.9.2'
-        retrofitVersion = '2.7.0'
+        retrofitVersion = '2.7.1'
         moshiVersion = '1.9.2'
-        navVersion = '2.1.0'
+        navVersion = '2.2.1'
         glideVersion = '4.10.0'
         shimmerVersion = '0.5.0'
         roomVersion = '2.2.3'
-        workVersion = '2.2.0'
+        workVersion = '2.3.1'
         daggerVersion = '2.25.4'
     }
     repositories {
         google()
         jcenter()
-        
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.3'
@@ -46,7 +45,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
     }
 }
 

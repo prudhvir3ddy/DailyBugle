@@ -30,14 +30,11 @@ class SearchViewModel @Inject constructor(
 
             val getNewsDeferred =
                 newsApiService.getEveryThingAsync(query, BuildConfig.apiNews)
-            try {
-                val resultList = getNewsDeferred.await()
-                _foundNews.value = resultList.articles.map {
-                    it.asDatabaseModel("in")
-                }
-            } catch (e: Exception) {
-                if (e.message.equals("HTTP 504 Unsatisfiable Request (only-if-cached)"))
-                    _status.value = true
+
+            val resultList = getNewsDeferred.body()
+            _foundNews.value = resultList?.articles?.map {
+                it.asDatabaseModel("in")
+
             }
         }
     }

@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-      android:name="com.prudhvir3ddy.dailybugle.ui.search.SearchFragment"
+        android:name="com.prudhvir3ddy.dailybugle.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search">
         <action
@@ -50,9 +50,9 @@
         android:id="@+id/noInternetFragment"
         android:name="com.prudhvir3ddy.dailybugle.ui.NoInternetFragment"
         android:label="fragment_no_internet"
-        tools:layout="@layout/fragment_no_internet" >
+        tools:layout="@layout/fragment_no_internet">
         <action
-          android:id="@+id/action_noInternetFragment_to_homeFragment"
-          app:destination="@id/homeFragment" />
+            android:id="@+id/action_noInternetFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

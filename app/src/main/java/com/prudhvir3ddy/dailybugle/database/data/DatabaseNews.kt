@@ -3,7 +3,6 @@ package com.prudhvir3ddy.dailybugle.database.data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
-import com.prudhvir3ddy.dailybugle.network.data.News
 import com.squareup.moshi.JsonClass
 import com.squareup.moshi.Moshi
 
@@ -48,10 +47,11 @@ data class DatabaseArticleSource(
     val name: String
 )
 
-class Converters{
+class Converters {
     @TypeConverter
-    fun fromArticleSourceToJson(value: DatabaseArticleSource): String{
-        val moshi = Moshi.Builder().build()
+    fun fromArticleSourceToJson(value: DatabaseArticleSource): String {
+        val moshi = Moshi.Builder()
+            .build()
         val jsonAdapter = moshi.adapter(DatabaseArticleSource::class.java)
 
         return jsonAdapter.toJson(value)
@@ -59,9 +59,9 @@ class Converters{
 
     @TypeConverter
     fun fromJsonToArticleSource(json: String): DatabaseArticleSource {
-        val moshi = Moshi.Builder().build()
+        val moshi = Moshi.Builder()
+            .build()
         val jsonAdapter = moshi.adapter(DatabaseArticleSource::class.java)
         return jsonAdapter.fromJson(json)!!
     }
 }
-

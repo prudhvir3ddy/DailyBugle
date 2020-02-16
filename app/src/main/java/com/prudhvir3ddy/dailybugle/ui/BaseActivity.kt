@@ -18,7 +18,6 @@ abstract class BaseFragment<VM : ViewModel> : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-
     private fun bindContentView() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(getViewModelClass())
     }

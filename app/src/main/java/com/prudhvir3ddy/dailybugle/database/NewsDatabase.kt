@@ -10,32 +10,32 @@ import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
 
 @Database(entities = [DatabaseArticles::class], version = 1, exportSchema = false)
 @TypeConverters(value = [Converters::class])
-abstract class NewsDatabase : RoomDatabase(){
+abstract class NewsDatabase : RoomDatabase() {
 
     abstract val newsDatabaseDao: NewsDao
 
-    companion object{
+    companion object {
         @Volatile
         private var INSTANCE: NewsDatabase? = null
 
         fun getInstance(context: Context): NewsDatabase {
-            synchronized(this){
+            synchronized(this) {
 
                 var instance = INSTANCE
 
-                if(instance == null){
+                if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         NewsDatabase::class.java,
                         "news_db"
-                    ).fallbackToDestructiveMigration()
+                    )
+                        .fallbackToDestructiveMigration()
                         .build()
 
                     INSTANCE = instance
 
                 }
                 return instance
-
 
             }
 

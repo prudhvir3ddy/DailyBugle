@@ -1,6 +1,5 @@
 package com.prudhvir3ddy.dailybugle.ui.home
 
-
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,7 +18,6 @@ import javax.inject.Inject
 class HomeFragment : BaseFragment<HomeViewModel>(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
-
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
@@ -32,7 +30,8 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
@@ -107,11 +106,13 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
         super.onDestroy()
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+    override fun onSharedPreferenceChanged(
+        sharedPreferences: SharedPreferences?,
+        key: String?
+    ) {
         if (key == "country") {
             viewModel.getData()
         }
     }
-
 
 }

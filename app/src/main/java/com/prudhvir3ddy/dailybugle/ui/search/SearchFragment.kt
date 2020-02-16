@@ -1,6 +1,5 @@
 package com.prudhvir3ddy.dailybugle.ui.search
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import com.prudhvir3ddy.dailybugle.MyApplication
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.ui.BaseFragment
 import com.prudhvir3ddy.dailybugle.ui.NewsAdapter
-import com.prudhvir3ddy.dailybugle.ui.SearchFragmentDirections
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
 class SearchFragment : BaseFragment<SearchViewModel>() {
@@ -26,7 +24,8 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
@@ -41,7 +40,9 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
 
         viewModel.status.observe(this, Observer {
             if (it) {
-                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToNoInternetFragment())
+                findNavController().navigate(
+                    SearchFragmentDirections.actionSearchFragmentToNoInternetFragment()
+                )
                 viewModel.resetStatus()
             }
         })
@@ -76,6 +77,5 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
         }
         return rootView
     }
-
 
 }

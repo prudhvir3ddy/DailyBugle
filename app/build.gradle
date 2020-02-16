@@ -9,138 +9,133 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 def properties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
-    properties.load(localPropertiesFile.newDataInputStream())
+  properties.load(localPropertiesFile.newDataInputStream())
 }
 
 //compare between system and local
 def apiNewsToken = properties.getProperty('api.news') != null
-        ? properties.getProperty('api.news') : System.getenv('API_NEWS')
+    ? properties.getProperty('api.news') : System.getenv('API_NEWS')
 
 //signing apps keys
 def keyAliasToken = properties['key.alias'] != null
-        ? properties['key.alias'] : System.getenv("KEY_ALIAS")
+    ? properties['key.alias'] : System.getenv("KEY_ALIAS")
 def keyPasswordToken = properties['key.password'] != null
-        ? properties['key.password'] : System.getenv("KEY_PASSWORD")
+    ? properties['key.password'] : System.getenv("KEY_PASSWORD")
 def storeFileToken = properties['store.file'] != null
-        ? properties['store.file'] : System.getenv("STORE_FILE")
+    ? properties['store.file'] : System.getenv("STORE_FILE")
 def storePasswordToken = properties['store.password'] != null
-        ? properties['store.password'] : System.getenv("STORE_PASSWORD")
+    ? properties['store.password'] : System.getenv("STORE_PASSWORD")
 
 def isSignConfigExists = keyAliasToken && keyPasswordToken && storeFileToken && storePasswordToken
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+  compileSdkVersion 29
+  buildToolsVersion "29.0.2"
 
-    defaultConfig {
-        applicationId "com.prudhvir3ddy.dailybugle"
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 15
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+  defaultConfig {
+    applicationId "com.prudhvir3ddy.dailybugle"
+    minSdkVersion 21
+    targetSdkVersion 29
+    versionCode 15
+    versionName "1.0"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+  }
+
+  dataBinding {
+    enabled = true
+  }
+  signingConfigs {
+    if (isSignConfigExists) {
+      release {
+        keyAlias keyAliasToken
+        keyPassword keyPasswordToken
+        storeFile file(storeFileToken)
+        storePassword storePasswordToken
+      }
+    }
+  }
+
+  buildTypes {
+
+    buildTypes.each {
+      it.buildConfigField("String", "apiNews", "\"${apiNewsToken}\"")
     }
 
-    dataBinding {
-        enabled = true
+    release {
+      minifyEnabled false
+      if (isSignConfigExists) {
+        signingConfig signingConfigs.release
+      }
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }
-    signingConfigs {
-        if (isSignConfigExists) {
-            release {
-                keyAlias keyAliasToken
-                keyPassword keyPasswordToken
-                storeFile file(storeFileToken)
-                storePassword storePasswordToken
-            }
-        }
-    }
-
-    buildTypes {
-
-        buildTypes.each {
-            it.buildConfigField("String", "apiNews", "\"${apiNewsToken}\"")
-        }
-
-        release {
-            minifyEnabled false
-            if (isSignConfigExists) {
-                signingConfig signingConfigs.release
-            }
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
-    }
-
-
+  }
+  compileOptions {
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+  }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "androidx.core:core-ktx:$coreKtxVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation "com.google.android.material:material:$materialDesignVersion"
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha01'
+  implementation "androidx.appcompat:appcompat:$appCompatVersion"
+  implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+  implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$retrofitCoroutinesAdapterVersion"
+  //kotlin
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
-    implementation "com.squareup.moshi:moshi:$moshiVersion"
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+  //design
+  implementation "com.google.android.material:material:$materialDesignVersion"
 
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
+  //lifecycle
+  implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
 
-    // Kotlin + coroutines
-    implementation "androidx.work:work-runtime-ktx:$workVersion"
+  //retrofit
+  implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+  implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
 
-    //dagger
-    implementation "com.google.dagger:dagger:$daggerVersion"
-    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+  //moshi
+  implementation "com.squareup.moshi:moshi:$moshiVersion"
+  kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 
-    //glide
-    implementation "com.github.bumptech.glide:glide:$glideVersion"
-    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+  //coroutines
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
 
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.preference:preference:1.1.0'
+  // workmanager
+  implementation "androidx.work:work-runtime-ktx:$workVersion"
 
+  //dagger
+  implementation "com.google.dagger:dagger:$daggerVersion"
+  kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
-    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+  //glide
+  implementation "com.github.bumptech.glide:glide:$glideVersion"
+  kapt "com.github.bumptech.glide:compiler:$glideVersion"
 
-    implementation "com.facebook.shimmer:shimmer:$shimmerVersion"
+  implementation 'androidx.preference:preference:1.1.0'
 
-    //Room
-    // Room and Lifecycle dependencies
-    implementation "androidx.room:room-runtime:$roomVersion"
-    kapt "androidx.room:room-compiler:$roomVersion"
-    implementation "androidx.room:room-ktx:$roomVersion"
+  //navigation
+  implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+  implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
 
-    // Dependencies for local unit tests
-    testImplementation "junit:junit:$junitVersion"
-    testImplementation "androidx.test:core-ktx:$androidXTestCoreVersion"
-    testImplementation "org.robolectric:robolectric:$robolectricVersion"
-    testImplementation "androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion"
-    testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
-    testImplementation 'org.mockito:mockito-core:2.23.0'
-    testImplementation "androidx.arch.core:core-testing:2.1.0"
+  // Room
+  implementation "androidx.room:room-runtime:$roomVersion"
+  kapt "androidx.room:room-compiler:$roomVersion"
+  implementation "androidx.room:room-ktx:$roomVersion"
 
-    testImplementation "com.squareup.okhttp3:mockwebserver:4.3.1"
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.9.2")
+  // Dependencies for local unit tests
+  testImplementation "junit:junit:$junitVersion"
+  testImplementation "org.robolectric:robolectric:$robolectricVersion"
+  testImplementation "androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion"
+  testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+  testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
+  testImplementation "com.squareup.okhttp3:mockwebserver:4.3.1"
 
-
-    // Instrumented testing
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
-    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
-    androidTestImplementation "androidx.test.ext:junit:$androidXTestExtKotlinRunnerVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+  // Instrumented testing
+  androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
+  androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+  androidTestImplementation "androidx.test.ext:junit:$androidXTestExtKotlinRunnerVersion"
+  androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
 }
