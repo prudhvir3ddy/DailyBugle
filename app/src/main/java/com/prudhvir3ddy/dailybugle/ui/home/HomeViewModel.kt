@@ -15,11 +15,7 @@ class HomeViewModel @Inject constructor(
   private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
-  init {
-    getData()
-  }
-
-  private var _topNews = MutableLiveData<List<DatabaseTopHeadlines>>()
+  private val _topNews = MutableLiveData<List<DatabaseTopHeadlines>>()
 
   val topNews: LiveData<List<DatabaseTopHeadlines>>
     get() = _topNews
@@ -37,8 +33,8 @@ class HomeViewModel @Inject constructor(
   private fun getTopHeadlinesFromRepo(isCache: Boolean) {
     viewModelScope.launch {
       val country = sharedPreferences.getString("country", "in")
-      if (!isCache) repo.getTopHeadLinesFromApi(country!!)
-      _topNews.value = repo.getTopHeadlinesFromDatabase(country!!)
+      if (!isCache) repo.getTopHeadLinesFromApi(country ?: "in")
+      _topNews.value = repo.getTopHeadlinesFromDatabase(country ?: "in")
       if (_topNews.value!!.isEmpty()) _status.value = true
     }
   }
