@@ -1,10 +1,11 @@
-package com.prudhvir3ddy.dailybugle.viewmodels
+package com.prudhvir3ddy.dailybugle.ui.home
 
 import android.content.SharedPreferences
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
-import com.prudhvir3ddy.dailybugle.network.data.Articles
 import com.prudhvir3ddy.dailybugle.repository.Repository
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.prudhvir3ddy.dailybugle.ui.home
+package com.prudhvir3ddy.dailybugle.ui
 
 import android.view.LayoutInflater
 import android.view.View

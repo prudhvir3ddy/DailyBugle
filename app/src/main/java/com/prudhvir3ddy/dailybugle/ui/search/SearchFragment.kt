@@ -1,4 +1,4 @@
-package com.prudhvir3ddy.dailybugle.ui
+package com.prudhvir3ddy.dailybugle.ui.search
 
 
 import android.os.Bundle
@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.prudhvir3ddy.dailybugle.MyApplication
 import com.prudhvir3ddy.dailybugle.R
-import com.prudhvir3ddy.dailybugle.ui.home.NewsAdapter
-import com.prudhvir3ddy.dailybugle.viewmodels.SearchViewModel
+import com.prudhvir3ddy.dailybugle.ui.BaseFragment
+import com.prudhvir3ddy.dailybugle.ui.NewsAdapter
+import com.prudhvir3ddy.dailybugle.ui.SearchFragmentDirections
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
 class SearchFragment : BaseFragment<SearchViewModel>() {
@@ -61,11 +61,13 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
                 when (it.itemId) {
 
                     R.id.menu_item_home -> {
-                        val action = SearchFragmentDirections.actionSearchFragmentToHomeFragment()
+                        val action =
+                            SearchFragmentDirections.actionSearchFragmentToHomeFragment()
                         findNavController().navigate(action)
                     }
                     R.id.menu_item_save -> {
-                        val action = SearchFragmentDirections.actionSearchFragmentToSaveFragment()
+                        val action =
+                            SearchFragmentDirections.actionSearchFragmentToSaveFragment()
                         findNavController().navigate(action)
                     }
                 }

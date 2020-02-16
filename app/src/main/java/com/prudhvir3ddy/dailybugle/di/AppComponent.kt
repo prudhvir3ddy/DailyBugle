@@ -2,8 +2,8 @@ package com.prudhvir3ddy.dailybugle.di
 
 import android.content.Context
 import com.prudhvir3ddy.dailybugle.MainActivity
-import com.prudhvir3ddy.dailybugle.ui.SearchFragment
 import com.prudhvir3ddy.dailybugle.ui.home.HomeFragment
+import com.prudhvir3ddy.dailybugle.ui.search.SearchFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton

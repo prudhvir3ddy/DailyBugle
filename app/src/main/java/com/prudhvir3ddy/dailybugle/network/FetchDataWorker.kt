@@ -6,7 +6,7 @@ package com.prudhvir3ddy.dailybugle.network
 //import androidx.work.Worker
 //import androidx.work.WorkerParameters
 //import com.prudhvir3ddy.dailybugle.database.NewsDatabase
-//import com.prudhvir3ddy.dailybugle.viewmodels.HomeViewModel
+//import com.prudhvir3ddy.dailybugle.ui.home.HomeViewModel
 //import com.prudhvir3ddy.dailybugle.viewmodels.HomeViewModelFactory
 //
 //class FetchDataWorker (context: Context, workerParams: WorkerParameters):
