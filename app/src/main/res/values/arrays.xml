@@ -1,116 +1,116 @@
 <resources>
-    <!-- Reply Preference -->
-    <string-array name="reply_entries">
-        <item>United Arab Emirates</item>
-        <item>Argentina</item>
-        <item>Austria</item>
-        <item>Australia</item>
-        <item>Belgium</item>
-        <item>Bulgaria</item>
-        <item>Brazil</item>
-        <item>Canada</item>
-        <item>Switzerland</item>
-        <item>China</item>
-        <item>Colombia</item>
-        <item>Cuba</item>
-        <item>Czech Republic</item>
-        <item>Germany</item>
-        <item>Egypt</item>
-        <item>France</item>
-        <item>United Kingdom</item>
-        <item>Greece</item>
-        <item>Hong Kong</item>
-        <item>Hungary</item>
-        <item>Indonesia</item>
-        <item>Ireland</item>
-        <item>Israel</item>
-        <item>India</item>
-        <item>Italy</item>
-        <item>Japan</item>
-        <item>South Korea</item>
-        <item>Luthuania</item>
-        <item>Latvia</item>
-        <item>Morocco</item>
-        <item>Mexico</item>
-        <item>Malaysia</item>
-        <item>Nigeria</item>
-        <item>Netherlands</item>
-        <item>Norway</item>
-        <item>New Zealand</item>
-        <item>Philippines</item>
-        <item>Poland</item>
-        <item>Portugal</item>
-        <item>Romania</item>
-        <item>Serbia</item>
-        <item>Russia</item>
-        <item>South Africa</item>
-        <item>Sweden</item>
-        <item>Singapore</item>
-        <item>Slovenia</item>
-        <item>Slovakia</item>
-        <item>Thailand</item>
-        <item>Turkey</item>
-        <item>Taiwan</item>
-        <item>Ukraine</item>
-        <item>United States</item>
-        <item>Venezuela</item>
-        <item>South Africa</item>
-    </string-array>
+  <!-- Reply Preference -->
+  <string-array name="reply_entries">
+    <item>United Arab Emirates</item>
+    <item>Argentina</item>
+    <item>Austria</item>
+    <item>Australia</item>
+    <item>Belgium</item>
+    <item>Bulgaria</item>
+    <item>Brazil</item>
+    <item>Canada</item>
+    <item>Switzerland</item>
+    <item>China</item>
+    <item>Colombia</item>
+    <item>Cuba</item>
+    <item>Czech Republic</item>
+    <item>Germany</item>
+    <item>Egypt</item>
+    <item>France</item>
+    <item>United Kingdom</item>
+    <item>Greece</item>
+    <item>Hong Kong</item>
+    <item>Hungary</item>
+    <item>Indonesia</item>
+    <item>Ireland</item>
+    <item>Israel</item>
+    <item>India</item>
+    <item>Italy</item>
+    <item>Japan</item>
+    <item>South Korea</item>
+    <item>Luthuania</item>
+    <item>Latvia</item>
+    <item>Morocco</item>
+    <item>Mexico</item>
+    <item>Malaysia</item>
+    <item>Nigeria</item>
+    <item>Netherlands</item>
+    <item>Norway</item>
+    <item>New Zealand</item>
+    <item>Philippines</item>
+    <item>Poland</item>
+    <item>Portugal</item>
+    <item>Romania</item>
+    <item>Serbia</item>
+    <item>Russia</item>
+    <item>South Africa</item>
+    <item>Sweden</item>
+    <item>Singapore</item>
+    <item>Slovenia</item>
+    <item>Slovakia</item>
+    <item>Thailand</item>
+    <item>Turkey</item>
+    <item>Taiwan</item>
+    <item>Ukraine</item>
+    <item>United States</item>
+    <item>Venezuela</item>
+    <item>South Africa</item>
+  </string-array>
 
-    <string-array name="reply_values">
-        <item>ae</item>
-        <item>ar</item>
-        <item>at</item>
-        <item>au</item>
-        <item>be</item>
-        <item>bg</item>
-        <item>br</item>
-        <item>ca</item>
-        <item>ch</item>
-        <item>cn</item>
-        <item>co</item>
-        <item>cu</item>
-        <item>cz</item>
-        <item>de</item>
-        <item>eg</item>
-        <item>fr</item>
-        <item>gb</item>
-        <item>gr</item>
-        <item>hk</item>
-        <item>hu</item>
-        <item>id</item>
-        <item>ie</item>
-        <item>il</item>
-        <item>in</item>
-        <item>it</item>
-        <item>jp</item>
-        <item>kr</item>
-        <item>lt</item>
-        <item>lv</item>
-        <item>ma</item>
-        <item>mx</item>
-        <item>my</item>
-        <item>ng</item>
-        <item>nl</item>
-        <item>no</item>
-        <item>nz</item>
-        <item>ph</item>
-        <item>pl</item>
-        <item>pt</item>
-        <item>ro</item>
-        <item>rs</item>
-        <item>ru</item>
-        <item>sa</item>
-        <item>se</item>
-        <item>sg</item>
-        <item>sl</item>
-        <item>sk</item>
-        <item>th</item>
-        <item>tr</item>
-        <item>tw</item>
-        <item>ua</item>
-        <item>us</item>
-        <item>ve</item>
-        <item>za</item>
-    </string-array>
+  <string-array name="reply_values">
+    <item>ae</item>
+    <item>ar</item>
+    <item>at</item>
+    <item>au</item>
+    <item>be</item>
+    <item>bg</item>
+    <item>br</item>
+    <item>ca</item>
+    <item>ch</item>
+    <item>cn</item>
+    <item>co</item>
+    <item>cu</item>
+    <item>cz</item>
+    <item>de</item>
+    <item>eg</item>
+    <item>fr</item>
+    <item>gb</item>
+    <item>gr</item>
+    <item>hk</item>
+    <item>hu</item>
+    <item>id</item>
+    <item>ie</item>
+    <item>il</item>
+    <item>in</item>
+    <item>it</item>
+    <item>jp</item>
+    <item>kr</item>
+    <item>lt</item>
+    <item>lv</item>
+    <item>ma</item>
+    <item>mx</item>
+    <item>my</item>
+    <item>ng</item>
+    <item>nl</item>
+    <item>no</item>
+    <item>nz</item>
+    <item>ph</item>
+    <item>pl</item>
+    <item>pt</item>
+    <item>ro</item>
+    <item>rs</item>
+    <item>ru</item>
+    <item>sa</item>
+    <item>se</item>
+    <item>sg</item>
+    <item>sl</item>
+    <item>sk</item>
+    <item>th</item>
+    <item>tr</item>
+    <item>tw</item>
+    <item>ua</item>
+    <item>us</item>
+    <item>ve</item>
+    <item>za</item>
+  </string-array>
 </resources>

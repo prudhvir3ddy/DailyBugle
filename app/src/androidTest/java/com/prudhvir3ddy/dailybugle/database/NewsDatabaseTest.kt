@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticleSource
-import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
+import com.prudhvir3ddy.dailybugle.database.data.DatabaseTopHeadlines
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -18,57 +18,57 @@ import java.io.IOException
 @RunWith(AndroidJUnit4::class)
 class NewsDatabaseTest {
 
-    private lateinit var newsDao: NewsDao
-    private lateinit var newsDatabase: NewsDatabase
+  private lateinit var newsDao: NewsDao
+  private lateinit var newsDatabase: NewsDatabase
 
-    @get: Rule
-    val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
+  @get: Rule
+  val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
-    @Before
-    fun createDb() {
+  @Before
+  fun createDb() {
 
-        val context = InstrumentationRegistry.getInstrumentation()
-            .targetContext
+    val context = InstrumentationRegistry.getInstrumentation()
+        .targetContext
 
-        newsDatabase = Room.inMemoryDatabaseBuilder(context, NewsDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
+    newsDatabase = Room.inMemoryDatabaseBuilder(context, NewsDatabase::class.java)
+        .allowMainThreadQueries()
+        .build()
 
-        newsDao = newsDatabase.newsDatabaseDao
-    }
+    newsDao = newsDatabase.newsDatabaseDao
+  }
 
-    @After
-    @Throws(IOException::class)
-    fun closeDb() {
-        newsDatabase.close()
-    }
+  @After
+  @Throws(IOException::class)
+  fun closeDb() {
+    newsDatabase.close()
+  }
 
-    @Test
-    @Throws(Exception::class)
-    fun insertAndGetNews() {
+  @Test
+  @Throws(Exception::class)
+  fun insertAndGetNews() {
 
-        val expectedArticles = listOf(
+    val expectedArticles = listOf(
 
-            DatabaseArticles(
-                author = "prudhvi",
-                source = DatabaseArticleSource(
-                    "1",
-                    "boo"
-                ),
-                country = "in",
-                title = "The Great",
-                description = "I Said the great",
-                url = "facebook.com",
-                urlToImage = "facebook.com",
-                publishedAt = "20-10-1999",
-                content = "boo, boo boo"
-            )
-
+        DatabaseTopHeadlines(
+            author = "prudhvi",
+            source = DatabaseArticleSource(
+                "1",
+                "boo"
+            ),
+            country = "in",
+            title = "The Great",
+            description = "I Said the great",
+            url = "facebook.com",
+            urlToImage = "facebook.com",
+            publishedAt = "20-10-1999",
+            content = "boo, boo boo"
         )
-        runBlocking {
-            newsDao.insert(expectedArticles)
-            val articles = newsDao.getAllArticles(country = "in")
-            assertEquals(expectedArticles, articles)
-        }
+
+    )
+    runBlocking {
+      newsDao.insertTopHeadlines(expectedArticles)
+      val articles = newsDao.getTopHeadlines(country = "in")
+      assertEquals(expectedArticles, articles)
     }
+  }
 }

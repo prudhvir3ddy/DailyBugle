@@ -2,79 +2,87 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.search.SearchFragment">
+    tools:context=".ui.search.SearchFragment"
+    >
 
-    <data>
+  <data>
 
-        <variable
-            name="viewModel"
-            type="com.prudhvir3ddy.dailybugle.ui.search.SearchViewModel" />
-    </data>
+    <variable
+        name="viewModel"
+        type="com.prudhvir3ddy.dailybugle.ui.search.SearchViewModel"
+        />
+  </data>
 
-    <FrameLayout
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/space_16"
+        >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/space_16">
+      <TextView
+          android:id="@+id/search_news_tv"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/search_news_label"
+          android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          />
 
-            <TextView
-                android:id="@+id/search_news_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/search_news_label"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+      <EditText
+          android:id="@+id/search_input"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:layout_marginTop="@dimen/space_16"
+          android:layout_marginBottom="@dimen/space_8"
+          android:background="@drawable/rounded_edittext"
+          android:drawableEnd="@drawable/ic_search_black_24dp"
+          android:hint="@string/search_news_label"
+          android:imeOptions="actionSearch"
+          android:importantForAutofill="no"
+          android:inputType="text"
+          android:paddingStart="@dimen/space_8"
+          android:paddingEnd="@dimen/space_8"
+          android:singleLine="true"
+          app:layout_constraintBottom_toTopOf="@+id/recycler_view_search_news"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/search_news_tv"
+          />
 
-            <EditText
-                android:id="@+id/search_input"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="@dimen/space_16"
-                android:layout_marginBottom="@dimen/space_8"
-                android:background="@drawable/rounded_edittext"
-                android:drawableEnd="@drawable/ic_search_black_24dp"
-                android:hint="@string/search_news_label"
-                android:imeOptions="actionSearch"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:paddingStart="@dimen/space_8"
-                android:paddingEnd="@dimen/space_8"
-                android:singleLine="true"
-                app:layout_constraintBottom_toTopOf="@+id/recycler_view_search_news"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/search_news_tv" />
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/recycler_view_search_news"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_marginTop="@dimen/space_8"
+          android:layout_marginBottom="?attr/actionBarSize"
+          android:orientation="vertical"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/search_input"
+          tools:listitem="@layout/item_news"
+          />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_search_news"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/space_8"
-                android:layout_marginBottom="?attr/actionBarSize"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/search_input"
-                tools:listitem="@layout/item_news" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/colorPrimary"
-            app:itemIconTint="@android:color/white"
-            app:itemTextColor="@android:color/white"
-            app:menu="@menu/bottom_navigation_menu" />
-    </FrameLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimary"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
+        app:menu="@menu/bottom_navigation_menu"
+        />
+  </FrameLayout>
 
 </layout>

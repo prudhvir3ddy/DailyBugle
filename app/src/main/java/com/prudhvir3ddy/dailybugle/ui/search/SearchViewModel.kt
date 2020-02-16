@@ -4,43 +4,40 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.prudhvir3ddy.dailybugle.BuildConfig
-import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
-import com.prudhvir3ddy.dailybugle.network.NewsApiService
-import com.prudhvir3ddy.dailybugle.utils.asDatabaseModel
+import com.prudhvir3ddy.dailybugle.network.data.Articles
+import com.prudhvir3ddy.dailybugle.repository.SearchNewsRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
-    private val newsApiService: NewsApiService
+  private val repo: SearchNewsRepository
 ) : ViewModel() {
 
-    private val _foundNews = MutableLiveData<List<DatabaseArticles>>()
+  private val _foundNews = MutableLiveData<List<Articles>>()
 
-    val foundNews: LiveData<List<DatabaseArticles>>
-        get() = _foundNews
+  val foundNews: LiveData<List<Articles>>
+    get() = _foundNews
 
-    private val _status = MutableLiveData<Boolean>()
+  private val _status = MutableLiveData<Boolean>()
 
-    val status: LiveData<Boolean>
-        get() = _status
+  val status: LiveData<Boolean>
+    get() = _status
 
-    fun searchNews(query: String) {
-        viewModelScope.launch {
-
-            val getNewsDeferred =
-                newsApiService.getEveryThingAsync(query, BuildConfig.apiNews)
-
-            val resultList = getNewsDeferred.body()
-            _foundNews.value = resultList?.articles?.map {
-                it.asDatabaseModel("in")
-
-            }
-        }
+  fun searchNewsFromRepo(
+    query: String
+  ) {
+    viewModelScope.launch {
+      //TODO handle no internet case
+      _foundNews.value = repo.getSearchedNewsFromApi(query)
+      // _foundNews.value = repo.getSearchedNewsFromDatabase(query)
+      if (_foundNews.value!!.isEmpty()) {
+        _status.value = true
+      }
     }
+  }
 
-    fun resetStatus() {
-        _status.value = false
-    }
+  fun resetStatus() {
+    _status.value = false
+  }
 
 }

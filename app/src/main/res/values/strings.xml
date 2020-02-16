@@ -1,24 +1,26 @@
 <resources>
-    <string name="app_name">DailyBugle</string>
+  <string name="app_name">DailyBugle</string>
 
-    <string name="search">Search</string>
-    <string name="home">Home</string>
-    <string name="saved">Saved</string>
-    <string name="settings">Settings</string>
-    <string name="title_activity_settings">Settings</string>
+  <string name="search">Search</string>
+  <string name="home">Home</string>
+  <string name="saved">Saved</string>
+  <string name="settings">Settings</string>
+  <string name="title_activity_settings">Settings</string>
 
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+  <!-- Sync Preferences -->
+  <string name="sync_title">Sync email periodically</string>
+  <string name="attachment_title">Download incoming attachments</string>
+  <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="top_news_label">Top Headlines</string>
-    <string name="search_news_label">Search Articles</string>
-    <string name="sources_label">Sources</string>
-    <string name="no_internet">No Internet Connection</string>
-    <string name="select_country">Select Your Country</string>
-    <string name="customise_news">Customise News</string>
-    <string name="country_title">country</string>
+  <string name="attachment_summary_off">Only download attachments when manually requested</string>
+  <string name="top_news_label">Top Headlines</string>
+  <string name="search_news_label">Search Articles</string>
+  <string name="sources_label">Sources</string>
+  <string name="no_internet">No Internet Connection</string>
+  <string name="select_country">Select Your Country</string>
+  <string name="customise_news">Customise News</string>
+  <string name="country_title">country</string>
+  <string name="retry">RETRY</string>
+  <string name="save_fragment">Save Fragment</string>
 </resources>

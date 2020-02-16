@@ -12,14 +12,14 @@ import javax.inject.Singleton
 @Component(modules = [AppModule::class, ViewModelModule::class])
 interface AppComponent {
 
-    // Factory to create instances of the AppComponent
-    @Component.Factory
-    interface Factory {
-        // With @BindsInstance, the Context passed in will be available in the graph
-        fun create(@BindsInstance context: Context): AppComponent
-    }
+  // Factory to create instances of the AppComponent
+  @Component.Factory
+  interface Factory {
+    // With @BindsInstance, the Context passed in will be available in the graph
+    fun create(@BindsInstance context: Context): AppComponent
+  }
 
-    fun inject(homeFragment: HomeFragment)
-    fun inject(mainActivity: MainActivity)
-    fun inject(searchFragment: SearchFragment)
+  fun inject(homeFragment: HomeFragment)
+  fun inject(mainActivity: MainActivity)
+  fun inject(searchFragment: SearchFragment)
 }

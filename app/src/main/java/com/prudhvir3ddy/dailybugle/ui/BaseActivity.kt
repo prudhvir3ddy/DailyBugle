@@ -8,20 +8,20 @@ import com.prudhvir3ddy.dailybugle.utils.ViewModelFactory
 import javax.inject.Inject
 
 abstract class BaseFragment<VM : ViewModel> : Fragment() {
-    lateinit var viewModel: VM
+  lateinit var viewModel: VM
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+  @Inject
+  lateinit var viewModelFactory: ViewModelFactory
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        bindContentView()
-        super.onCreate(savedInstanceState)
-    }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    bindContentView()
+    super.onCreate(savedInstanceState)
+  }
 
-    private fun bindContentView() {
-        viewModel = ViewModelProvider(this, viewModelFactory).get(getViewModelClass())
-    }
+  private fun bindContentView() {
+    viewModel = ViewModelProvider(this, viewModelFactory).get(getViewModelClass())
+  }
 
-    abstract fun getViewModelClass(): Class<VM>
+  abstract fun getViewModelClass(): Class<VM>
 
 }

@@ -4,17 +4,21 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticles
+import com.prudhvir3ddy.dailybugle.database.data.DatabaseTopHeadlines
 
 @Dao
 interface NewsDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(articles: List<DatabaseArticles>)
+  /**
+   * topheadlines
+   */
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  suspend fun insertTopHeadlines(articles: List<DatabaseTopHeadlines>)
 
-    @Query("SELECT * FROM articles WHERE country=:country")
-    suspend fun getAllArticles(country: String): List<DatabaseArticles>
+  @Query("SELECT * FROM top_headlines WHERE `country`=:country")
+  suspend fun getTopHeadlines(country: String): List<DatabaseTopHeadlines>
 
-    @Query("DELETE FROM articles WHERE country=:country")
-    suspend fun clear(country: String)
+  @Query("DELETE FROM top_headlines WHERE `country`=:country")
+  suspend fun clearTopHeadlines(country: String)
+
 }

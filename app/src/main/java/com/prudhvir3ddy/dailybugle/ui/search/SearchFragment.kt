@@ -10,72 +10,73 @@ import androidx.navigation.fragment.findNavController
 import com.prudhvir3ddy.dailybugle.MyApplication
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.ui.BaseFragment
-import com.prudhvir3ddy.dailybugle.ui.NewsAdapter
-import kotlinx.android.synthetic.main.fragment_search.view.*
+import kotlinx.android.synthetic.main.fragment_search.view.bottom_navigation
+import kotlinx.android.synthetic.main.fragment_search.view.recycler_view_search_news
+import kotlinx.android.synthetic.main.fragment_search.view.search_input
 
 class SearchFragment : BaseFragment<SearchViewModel>() {
 
-    override fun getViewModelClass(): Class<SearchViewModel> = SearchViewModel::class.java
+  override fun getViewModelClass(): Class<SearchViewModel> = SearchViewModel::class.java
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        (context?.applicationContext as MyApplication).appComponent.inject(this)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    (context?.applicationContext as MyApplication).appComponent.inject(this)
 
-        super.onCreate(savedInstanceState)
-    }
+    super.onCreate(savedInstanceState)
+  }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View {
 
-        val rootView = inflater.inflate(R.layout.fragment_search, container, false)
+    val rootView = inflater.inflate(R.layout.fragment_search, container, false)
 
-        val newsAdapter = NewsAdapter()
+    val searchNewsAdapter = SearchNewsAdapter()
 
-        viewModel.foundNews.observe(this, Observer {
-            newsAdapter.submitList(it)
-        })
-
-
-        viewModel.status.observe(this, Observer {
-            if (it) {
-                findNavController().navigate(
-                    SearchFragmentDirections.actionSearchFragmentToNoInternetFragment()
-                )
-                viewModel.resetStatus()
-            }
-        })
-
-        rootView.apply {
-            search_input.setOnEditorActionListener { v, actionId, event ->
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    viewModel.searchNews(search_input.text.toString())
-                    search_input.text.clear()
-                }
-                false
-            }
-            recycler_view_search_news.adapter = newsAdapter
+    viewModel.foundNews.observe(this, Observer {
+      searchNewsAdapter.submitList(it)
+    })
 
 
-            bottom_navigation.setOnNavigationItemSelectedListener {
-                when (it.itemId) {
+    viewModel.status.observe(this, Observer {
+      if (it) {
+        findNavController().navigate(
+            SearchFragmentDirections.actionSearchFragmentToNoInternetFragment()
+        )
+        viewModel.resetStatus()
+      }
+    })
 
-                    R.id.menu_item_home -> {
-                        val action =
-                            SearchFragmentDirections.actionSearchFragmentToHomeFragment()
-                        findNavController().navigate(action)
-                    }
-                    R.id.menu_item_save -> {
-                        val action =
-                            SearchFragmentDirections.actionSearchFragmentToSaveFragment()
-                        findNavController().navigate(action)
-                    }
-                }
-                false
-            }
+    rootView.apply {
+      search_input.setOnEditorActionListener { v, actionId, event ->
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+          viewModel.searchNewsFromRepo(search_input.text.toString())
+          search_input.text.clear()
         }
-        return rootView
+        false
+      }
+      recycler_view_search_news.adapter = searchNewsAdapter
+
+
+      bottom_navigation.setOnNavigationItemSelectedListener {
+        when (it.itemId) {
+
+          R.id.menu_item_home -> {
+            val action =
+              SearchFragmentDirections.actionSearchFragmentToHomeFragment()
+            findNavController().navigate(action)
+          }
+          R.id.menu_item_save -> {
+            val action =
+              SearchFragmentDirections.actionSearchFragmentToSaveFragment()
+            findNavController().navigate(action)
+          }
+        }
+        false
+      }
     }
+    return rootView
+  }
 
 }

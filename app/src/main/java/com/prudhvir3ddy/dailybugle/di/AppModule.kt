@@ -18,40 +18,40 @@ import javax.inject.Singleton
 @Module
 class AppModule {
 
-    @Provides
-    @Singleton
-    fun provideRetrofit(moshi: Moshi): Retrofit {
-        return Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl(BASE_URL)
-            .build()
-    }
+  @Provides
+  @Singleton
+  fun provideRetrofit(moshi: Moshi): Retrofit {
+    return Retrofit.Builder()
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .baseUrl(BASE_URL)
+        .build()
+  }
 
-    @Provides
-    @Singleton
-    fun provideMoshi(): Moshi {
-        return Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-    }
+  @Provides
+  @Singleton
+  fun provideMoshi(): Moshi {
+    return Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+  }
 
-    @Provides
-    @Singleton
-    fun provideApiService(retrofit: Retrofit): NewsApiService {
-        return retrofit.create(NewsApiService::class.java)
-    }
+  @Provides
+  @Singleton
+  fun provideApiService(retrofit: Retrofit): NewsApiService {
+    return retrofit.create(NewsApiService::class.java)
+  }
 
-    @Provides
-    @Singleton
-    fun provideSharedPreferences(context: Context): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-    }
+  @Provides
+  @Singleton
+  fun provideSharedPreferences(context: Context): SharedPreferences {
+    return PreferenceManager.getDefaultSharedPreferences(context)
+  }
 
-    @Singleton
-    @Provides
-    fun provideRoomDatabase(context: Context): NewsDao {
-        return NewsDatabase.getInstance(context)
-            .newsDatabaseDao
-    }
+  @Singleton
+  @Provides
+  fun provideRoomDatabase(context: Context): NewsDao {
+    return NewsDatabase.getInstance(context)
+        .newsDatabaseDao
+  }
 
 }

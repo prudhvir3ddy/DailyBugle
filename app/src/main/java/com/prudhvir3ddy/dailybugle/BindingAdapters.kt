@@ -6,12 +6,12 @@ import com.bumptech.glide.Glide
 
 @BindingAdapter("urlToImage")
 fun bindImage(
-    imgView: ImageView,
-    imgUrl: String?
+  imgView: ImageView,
+  imgUrl: String?
 ) {
-    Glide.with(imgView.context)
-        .load(imgUrl)
-        .centerCrop()
-        .placeholder(R.drawable.loading)
-        .into(imgView)
+  Glide.with(imgView.context)
+      .load(imgUrl)
+      .centerCrop()
+      .placeholder(R.drawable.loading)
+      .into(imgView)
 }
