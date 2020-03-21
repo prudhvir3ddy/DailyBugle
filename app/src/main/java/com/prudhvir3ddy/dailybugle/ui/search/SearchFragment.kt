@@ -10,9 +10,8 @@ import androidx.navigation.fragment.findNavController
 import com.prudhvir3ddy.dailybugle.MyApplication
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.ui.BaseFragment
-import kotlinx.android.synthetic.main.fragment_search.view.bottom_navigation
-import kotlinx.android.synthetic.main.fragment_search.view.recycler_view_search_news
-import kotlinx.android.synthetic.main.fragment_search.view.search_input
+import com.prudhvir3ddy.dailybugle.ui.SearchFragmentDirections
+import kotlinx.android.synthetic.main.fragment_search.view.*
 
 class SearchFragment : BaseFragment<SearchViewModel>() {
 
@@ -34,12 +33,12 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
 
     val searchNewsAdapter = SearchNewsAdapter()
 
-    viewModel.foundNews.observe(this, Observer {
+    viewModel.foundNews.observe(viewLifecycleOwner, Observer {
       searchNewsAdapter.submitList(it)
     })
 
 
-    viewModel.status.observe(this, Observer {
+    viewModel.status.observe(viewLifecycleOwner, Observer {
       if (it) {
         findNavController().navigate(
             SearchFragmentDirections.actionSearchFragmentToNoInternetFragment()

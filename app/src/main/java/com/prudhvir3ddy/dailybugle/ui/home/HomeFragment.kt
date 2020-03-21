@@ -10,11 +10,8 @@ import androidx.navigation.fragment.findNavController
 import com.prudhvir3ddy.dailybugle.MyApplication
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.ui.BaseFragment
-import kotlinx.android.synthetic.main.fragment_home.recycler_view_top_news
-import kotlinx.android.synthetic.main.fragment_home.swipe_refresh
-import kotlinx.android.synthetic.main.fragment_home.view.bottom_navigation
-import kotlinx.android.synthetic.main.fragment_home.view.recycler_view_top_news
-import kotlinx.android.synthetic.main.fragment_home.view.swipe_refresh
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import javax.inject.Inject
 
 class HomeFragment : BaseFragment<HomeViewModel>(),
@@ -53,7 +50,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
       swipe_refresh.isRefreshing = false
     })
 
-    viewModel.status.observe(this, Observer {
+      viewModel.status.observe(viewLifecycleOwner, Observer {
       if (it) {
         findNavController().navigate(
             HomeFragmentDirections.actionHomeFragmentToNoInternetFragment()
