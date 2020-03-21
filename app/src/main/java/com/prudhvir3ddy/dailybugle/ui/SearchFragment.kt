@@ -34,12 +34,12 @@ class SearchFragment : Fragment() {
 
         val newsAdapter = NewsAdapter()
 
-        viewModel.foundNews.observe(this, Observer {
+        viewModel.foundNews.observe(viewLifecycleOwner, Observer {
             newsAdapter.submitList(it)
         })
 
 
-        viewModel.status.observe(this, Observer {
+        viewModel.status.observe(viewLifecycleOwner, Observer {
             if (it) {
                 findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToNoInternetFragment())
                 viewModel.resetStatus()

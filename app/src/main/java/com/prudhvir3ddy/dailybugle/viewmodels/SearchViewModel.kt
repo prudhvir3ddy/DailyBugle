@@ -1,5 +1,6 @@
 package com.prudhvir3ddy.dailybugle.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,7 +35,10 @@ class SearchViewModel (
                 _foundNews.value = resultList!!.articles.map {
                     it.asDatabaseModel("in")
                 }
+                Log.d("boo", resultList.toString())
             } catch (e: Exception) {
+                Log.d("boo", e.toString())
+
                 if (e.message.equals("HTTP 504 Unsatisfiable Request (only-if-cached)"))
                     _status.value = true
             }
