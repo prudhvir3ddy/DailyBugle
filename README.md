@@ -14,8 +14,16 @@
      <td> Saved Articles </td>
   </tr>
   <tr>
-    <td><img src="screenshots/ss1.png" width=270 height=480></td>
-    <td><img src="screenshots/ss2.png" width=270 height=480></td>
+    <td><img src="screenshots/ss1.png" width=360 height=640></td>
+    <td><img src="screenshots/ss2.png" width=360 height=640></td>
     <td> Coming soon! </td>
+  </tr>
+    <tr>
+    <td>Select country</td>
+     <td>no internet</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/ss3.png" width=360 height=640></td>
+    <td><img src="screenshots/ss4.png" width=360 height=640></td>
   </tr>
  </table>
