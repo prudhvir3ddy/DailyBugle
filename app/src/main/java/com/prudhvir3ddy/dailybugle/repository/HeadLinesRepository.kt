@@ -1,8 +1,9 @@
 package com.prudhvir3ddy.dailybugle.repository
 
 import android.content.Context
+import com.prudhvir3ddy.dailybugle.BuildConfig
 import com.prudhvir3ddy.dailybugle.database.NewsDao
-import com.prudhvir3ddy.dailybugle.database.data.DatabaseTopHeadlines
+import com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles
 import com.prudhvir3ddy.dailybugle.network.Connection
 import com.prudhvir3ddy.dailybugle.network.NewsApiService
 import com.prudhvir3ddy.dailybugle.utils.asDatabaseModel
@@ -15,22 +16,22 @@ class HeadLinesRepository @Inject constructor(
 ) {
   suspend fun getTopHeadLinesFromApi(country: String) {
     val response =
-      newsApiService.getTopHeadlinesAsync(country)
+      newsApiService.getTopHeadlinesAsync(country, BuildConfig.apiNews)
 
     if (response.isSuccessful) {
       val resultList = response.body()
-      database.clearTopHeadlines(country)
+      database.clear(country)
       val listResult = resultList?.articles?.map {
         it.asDatabaseModel(country)
       }
-      database.insertTopHeadlines(listResult!!)
+      database.insert(listResult!!)
     } else {
       //TODO handle error
     }
   }
 
-  suspend fun getTopHeadlinesFromDatabase(country: String): List<DatabaseTopHeadlines> {
-    return database.getTopHeadlines(country)
+  suspend fun getTopHeadlinesFromDatabase(country: String): List<UIDatabaseArticles> {
+    return database.getAllArticles(country)
   }
 
   fun getConnection(): Boolean {

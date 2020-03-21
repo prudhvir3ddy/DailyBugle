@@ -7,29 +7,29 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.prudhvir3ddy.dailybugle.R.layout
 import com.prudhvir3ddy.dailybugle.bindImage
-import com.prudhvir3ddy.dailybugle.network.data.Articles
+import com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles
 import com.prudhvir3ddy.dailybugle.ui.ArticlesViewHolder
 import kotlinx.android.synthetic.main.item_news.view.main_image
 import kotlinx.android.synthetic.main.item_news.view.title
 
-object SearchNewsDiffCallback : DiffUtil.ItemCallback<Articles>() {
+object SearchNewsDiffCallback : DiffUtil.ItemCallback<UIDatabaseArticles>() {
   override fun areItemsTheSame(
-    oldItem: Articles,
-    newItem: Articles
+    oldItem: UIDatabaseArticles,
+    newItem: UIDatabaseArticles
   ): Boolean {
     return oldItem.title == newItem.title
   }
 
   override fun areContentsTheSame(
-    oldItem: Articles,
-    newItem: Articles
+    oldItem: UIDatabaseArticles,
+    newItem: UIDatabaseArticles
   ): Boolean {
     return oldItem == newItem
   }
 
 }
 
-class SearchNewsAdapter : ListAdapter<Articles, ArticlesViewHolder>(
+class SearchNewsAdapter : ListAdapter<UIDatabaseArticles, ArticlesViewHolder>(
     SearchNewsDiffCallback
 ) {
 

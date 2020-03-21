@@ -10,8 +10,10 @@ import androidx.navigation.fragment.findNavController
 import com.prudhvir3ddy.dailybugle.MyApplication
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.ui.BaseFragment
-import com.prudhvir3ddy.dailybugle.ui.SearchFragmentDirections
-import kotlinx.android.synthetic.main.fragment_search.view.*
+import com.prudhvir3ddy.dailybugle.viewmodels.SearchViewModel
+import kotlinx.android.synthetic.main.fragment_search.view.bottom_navigation
+import kotlinx.android.synthetic.main.fragment_search.view.recycler_view_search_news
+import kotlinx.android.synthetic.main.fragment_search.view.search_input
 
 class SearchFragment : BaseFragment<SearchViewModel>() {
 
@@ -50,7 +52,7 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
     rootView.apply {
       search_input.setOnEditorActionListener { v, actionId, event ->
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-          viewModel.searchNewsFromRepo(search_input.text.toString())
+          viewModel.searchNews(search_input.text.toString())
           search_input.text.clear()
         }
         false
