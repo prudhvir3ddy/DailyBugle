@@ -52,32 +52,35 @@ class ResponseNewsDatabaseTest {
         newsDatabase.close()
     }
 
-    @Test
-    @Throws(Exception::class)
-    fun insertAndGetNews() {
+  /**
+   * tests whether database is working as expected
+   */
+  @Test
+  @Throws(Exception::class)
+  fun insertAndGetNews() {
 
-        val expectedArticles = listOf(
+    val expectedArticles = listOf(
 
-            UIDatabaseArticles(
-                author = "prudhvi",
-                source = DatabaseArticleSource(
-                    "1",
-                    "boo"
-                ),
-                country = "in",
-                title = "The Great",
-                description = "I Said the great",
-                url = "facebook.com",
-                urlToImage = "facebook.com",
-                publishedAt = "20-10-1999",
-                content = "boo, boo boo"
-            )
+      UIDatabaseArticles(
+        author = "prudhvi",
+        source = DatabaseArticleSource(
+          "1",
+          "boo"
+        ),
+        country = "in",
+        title = "The Great",
+        description = "I Said the great",
+        url = "facebook.com",
+        urlToImage = "facebook.com",
+        publishedAt = "20-10-1999",
+        content = "boo, boo boo"
+      )
 
-        )
-        runBlocking {
-            newsDao.insert(expectedArticles)
-            val articles = newsDao.getAllArticles(country = "in")
-            assertEquals(expectedArticles, articles)
-        }
+    )
+    runBlocking {
+      newsDao.insert(expectedArticles)
+      val articles = newsDao.getAllArticles(country = "in")
+      assertEquals(expectedArticles, articles)
     }
+  }
 }

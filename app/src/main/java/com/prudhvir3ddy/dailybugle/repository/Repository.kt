@@ -18,6 +18,9 @@ class Repository @Inject constructor(
   private val context: Context,
   private val newsApiService: NewsApiService
 ) {
+  /**
+   * get topheadlines depending on condition, get from network if available or database
+   */
   suspend fun getTopHeadLines(country: String) {
     val getTopHeadLinesDeferred =
       newsApiService.getTopHeadlinesAsync(
@@ -39,6 +42,9 @@ class Repository @Inject constructor(
     return database.getAllArticles(country)
   }
 
+  /**
+   * checking for connection
+   */
   fun getConnection(): Boolean {
     return Connection.hasNetwork(context)
   }

@@ -16,10 +16,16 @@ import javax.inject.Singleton
 @Component(modules = [AppModule::class, ViewModelModule::class])
 interface AppComponent {
 
-  // Factory to create instances of the AppComponent
+  /**
+   *  Factory to create instances of the AppComponent -
+   *  factory tells how to create objects, now we are using bindsinstance of context
+   *  so context will be available in dagger graph
+   */
   @Component.Factory
   interface Factory {
-    // With @BindsInstance, the Context passed in will be available in the graph
+    /**
+     *  With @BindsInstance, the Context passed in will be available in the graph
+     */
     fun create(@BindsInstance context: Context): AppComponent
   }
 
@@ -27,6 +33,7 @@ interface AppComponent {
    * inject all activities and fragments here
    */
   fun inject(homeFragment: HomeFragment)
+
   fun inject(mainActivity: MainActivity)
   fun inject(searchFragment: SearchFragment)
 }

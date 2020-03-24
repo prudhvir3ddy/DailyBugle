@@ -5,18 +5,21 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 
 /**
- * to check whether we are connected to internet or not
+ * check whether we are connected to internet or not
  */
-class Connection {
-  companion object {
-    fun hasNetwork(context: Context): Boolean {
-      var isConnected = false // Initial Value
-      val connectivityManager =
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-      val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
-      if (activeNetwork != null && activeNetwork.isConnected)
-        isConnected = true
-      return isConnected
-    }
+
+object Connection {
+
+  /**
+   * check connection and return boolean value for any context in the app
+   */
+  fun hasNetwork(context: Context): Boolean {
+    var isConnected = false // Initial Value
+    val connectivityManager =
+      context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+    if (activeNetwork != null && activeNetwork.isConnected)
+      isConnected = true
+    return isConnected
   }
 }

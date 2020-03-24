@@ -30,6 +30,10 @@ class SearchViewModel @Inject constructor(
   val status: LiveData<Boolean>
     get() = _status
 
+  /**
+   * this function provides data to the UI
+   * by calling repository function which either gets data from network or database
+   */
   fun searchNews(query: String) {
     viewModelScope.launch {
 
@@ -47,6 +51,10 @@ class SearchViewModel @Inject constructor(
     }
   }
 
+  /**
+   * this is an event to show whether we are in no internet screen
+   * once we get  internet and data is available we will go to main screen again
+   */
   fun resetStatus() {
     _status.value = false
   }

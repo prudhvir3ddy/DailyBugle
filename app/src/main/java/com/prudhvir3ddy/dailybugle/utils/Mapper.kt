@@ -23,7 +23,10 @@ fun ResponseArticles.asDatabaseModel(country: String?): UIDatabaseArticles {
 
 }
 
+/**
+ * ArticleSource object mapping to databaseArticleSource
+ */
 fun ArticleSource.asDatabaseArticleSource() = DatabaseArticleSource(
-    id = id,
-    name = name
+  id = id,
+  name = name
 )

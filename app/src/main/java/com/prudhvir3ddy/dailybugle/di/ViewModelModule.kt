@@ -15,17 +15,23 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class ViewModelModule {
 
-  //factory tells us how to provide
+  /**
+   * factory tells dagger how to provide
+   */
   @Binds
   abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
 
-  //binding homeviewmodel
+  /**
+   * binding homeviewmodel into dagger
+   */
   @Binds
   @IntoMap
   @ViewModelScope(HomeViewModel::class)
   abstract fun bindHomeViewModel(homeViewModel: HomeViewModel): ViewModel
 
-  //binding searchingviewmodel
+  /**
+   *  binding searchingviewmodel to dagger
+   */
   @Binds
   @IntoMap
   @ViewModelScope(SearchViewModel::class)
