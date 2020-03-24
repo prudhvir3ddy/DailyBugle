@@ -10,7 +10,8 @@ import com.prudhvir3ddy.dailybugle.R
 import kotlinx.android.synthetic.main.fragment_save.view.bottom_navigation
 
 /**
- * A simple [Fragment] subclass.
+ * saved articles screen UI
+ * not implemented yet
  */
 class SaveFragment : Fragment() {
 

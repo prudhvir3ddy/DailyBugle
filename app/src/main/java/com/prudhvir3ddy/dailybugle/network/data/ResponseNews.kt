@@ -1,5 +1,8 @@
 package com.prudhvir3ddy.dailybugle.network.data
 
+/**
+ * pojo class of kotlin to network response
+ */
 data class ResponseNews(
     val status: String,
     val totalResults: Int,

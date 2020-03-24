@@ -1,23 +1,29 @@
 package com.prudhvir3ddy.dailybugle.ui.home
 
-
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.prudhvir3ddy.dailybugle.MyApplication
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.ui.BaseFragment
-import com.prudhvir3ddy.dailybugle.viewmodels.HomeViewModel
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.fragment_home.recycler_view_top_news
+import kotlinx.android.synthetic.main.fragment_home.swipe_refresh
+import kotlinx.android.synthetic.main.fragment_home.view.bottom_navigation
+import kotlinx.android.synthetic.main.fragment_home.view.recycler_view_top_news
+import kotlinx.android.synthetic.main.fragment_home.view.swipe_refresh
 
+/**
+ * top headlines screen UI
+ */
 class HomeFragment : BaseFragment<HomeViewModel>() {
 
-
   override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?,
+    inflater: LayoutInflater,
+    container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
 
@@ -82,4 +88,9 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
   }
 
   override fun getViewModelClass(): Class<HomeViewModel> = HomeViewModel::class.java
+
+  override fun onAttach(context: Context) {
+    super.onAttach(context)
+    (context.applicationContext as MyApplication).appComponent.inject(this);
+  }
 }

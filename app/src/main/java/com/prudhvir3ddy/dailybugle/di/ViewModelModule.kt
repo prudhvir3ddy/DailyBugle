@@ -2,13 +2,16 @@ package com.prudhvir3ddy.dailybugle.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.prudhvir3ddy.dailybugle.ui.home.HomeViewModel
+import com.prudhvir3ddy.dailybugle.ui.search.SearchViewModel
 import com.prudhvir3ddy.dailybugle.utils.ViewModelFactory
-import com.prudhvir3ddy.dailybugle.viewmodels.HomeViewModel
-import com.prudhvir3ddy.dailybugle.viewmodels.SearchViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
+/**
+ * to bind viewmodels to dagger graph
+ */
 @Module
 abstract class ViewModelModule {
 

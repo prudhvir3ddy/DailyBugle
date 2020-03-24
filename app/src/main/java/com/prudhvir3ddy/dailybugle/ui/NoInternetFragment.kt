@@ -10,7 +10,8 @@ import com.prudhvir3ddy.dailybugle.R
 import kotlinx.android.synthetic.main.fragment_no_internet.view.retry_button
 
 /**
- * A simple [Fragment] subclass.
+ * when there is no internet and no date in our database
+ * we are supposed to show this screen
  */
 class NoInternetFragment : Fragment() {
 

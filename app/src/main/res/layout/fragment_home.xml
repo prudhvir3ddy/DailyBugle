@@ -9,7 +9,7 @@
 
     <variable
         name="viewModel"
-        type="com.prudhvir3ddy.dailybugle.viewmodels.HomeViewModel"
+        type="com.prudhvir3ddy.dailybugle.ui.home.HomeViewModel"
         />
   </data>
 

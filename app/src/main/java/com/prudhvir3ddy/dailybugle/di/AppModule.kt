@@ -15,6 +15,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
+/**
+ * all dependencies of entire application goes here
+ */
 @Module
 class AppModule {
 
@@ -22,17 +25,17 @@ class AppModule {
   @Singleton
   fun provideRetrofit(moshi: Moshi): Retrofit {
     return Retrofit.Builder()
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .baseUrl(BASE_URL)
-        .build()
+      .addConverterFactory(MoshiConverterFactory.create(moshi))
+      .baseUrl(BASE_URL)
+      .build()
   }
 
   @Provides
   @Singleton
   fun provideMoshi(): Moshi {
     return Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
+      .add(KotlinJsonAdapterFactory())
+      .build()
   }
 
   @Provides
@@ -51,7 +54,7 @@ class AppModule {
   @Provides
   fun provideRoomDatabase(context: Context): NewsDao {
     return NewsDatabase.getInstance(context)
-        .newsDatabaseDao
+      .newsDatabaseDao
   }
 
 }

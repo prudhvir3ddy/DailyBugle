@@ -5,18 +5,21 @@ import com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles
 import com.prudhvir3ddy.dailybugle.network.data.ArticleSource
 import com.prudhvir3ddy.dailybugle.network.data.ResponseArticles
 
+/**
+ * To Map network responses to local database model responses
+ */
 fun ResponseArticles.asDatabaseModel(country: String?): UIDatabaseArticles {
-    return UIDatabaseArticles(
-        url = url,
-        title = title,
-        description = description,
-        publishedAt = publishedAt,
-        content = content,
-        source = source.asDatabaseArticleSource(),
-        urlToImage = urlToImage,
-        country = country!!,
-        author = author
-    )
+  return UIDatabaseArticles(
+    url = url,
+    title = title,
+    description = description,
+    publishedAt = publishedAt,
+    content = content,
+    source = source.asDatabaseArticleSource(),
+    urlToImage = urlToImage,
+    country = country!!,
+    author = author
+  )
 
 }
 

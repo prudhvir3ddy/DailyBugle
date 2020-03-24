@@ -10,6 +10,10 @@ import com.prudhvir3ddy.dailybugle.network.NewsApiService
 import com.prudhvir3ddy.dailybugle.utils.asDatabaseModel
 import javax.inject.Inject
 
+/**
+ * repository class is  supposed to produce data to our viewmodels
+ * repository is responsibe to provide data whether from database or network
+ */
 class Repository @Inject constructor(
   private val database: NewsDao,
   private val context: Context,
@@ -18,8 +22,8 @@ class Repository @Inject constructor(
   suspend fun getTopHeadLines(country: String) {
     val getTopHeadLinesDeferred =
       newsApiService.getTopHeadlinesAsync(
-          country,
-          BuildConfig.apiNews
+        country,
+        BuildConfig.apiNews
       )
     try {
       val resultList = getTopHeadLinesDeferred.body()

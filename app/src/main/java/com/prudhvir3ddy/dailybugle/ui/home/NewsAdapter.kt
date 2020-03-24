@@ -10,9 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.bindImage
 import com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles
+import kotlinx.android.synthetic.main.item_news.view.main_image
+import kotlinx.android.synthetic.main.item_news.view.title
 
-import kotlinx.android.synthetic.main.item_news.view.*
-
+/**
+ * DiffUtil is an optimisation for recyclerview
+ * read more here:
+ * https://developer.android.com/reference/kotlin/androidx/recyclerview/widget/DiffUtil
+ */
 object NewsDiffCallback : DiffUtil.ItemCallback<UIDatabaseArticles>() {
   override fun areItemsTheSame(
     oldItem: UIDatabaseArticles,
@@ -30,10 +35,18 @@ object NewsDiffCallback : DiffUtil.ItemCallback<UIDatabaseArticles>() {
 
 }
 
+/**
+ * Adapter for main screen recyclerview where top headlines shows up
+ * this adapter is responsible to sit between the list we passed
+ * and UI that shows up
+ */
 class NewsAdapter : ListAdapter<UIDatabaseArticles, NewsAdapter.NewsViewHolder>(
-    NewsDiffCallback
+  NewsDiffCallback
 ) {
 
+  /**
+   * view holder for the items
+   */
   class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
   override fun onCreateViewHolder(
@@ -41,11 +54,11 @@ class NewsAdapter : ListAdapter<UIDatabaseArticles, NewsAdapter.NewsViewHolder>(
     viewType: Int
   ): NewsViewHolder {
     return NewsViewHolder(
-        LayoutInflater.from(parent.context).inflate(
-            R.layout.item_news,
-            parent,
-            false
-        )
+      LayoutInflater.from(parent.context).inflate(
+        R.layout.item_news,
+        parent,
+        false
+      )
     )
   }
 

@@ -1,4 +1,4 @@
-package com.prudhvir3ddy.dailybugle.viewmodels
+package com.prudhvir3ddy.dailybugle.ui.home
 
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
@@ -10,6 +10,11 @@ import com.prudhvir3ddy.dailybugle.repository.Repository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel for home fragment
+ * viewmodels are independent of UI
+ * so all logics goes in here and it is supposed to  provide data to UI
+ */
 class HomeViewModel @Inject constructor(
   private val repo: Repository,
   private val sharedPreferences: SharedPreferences

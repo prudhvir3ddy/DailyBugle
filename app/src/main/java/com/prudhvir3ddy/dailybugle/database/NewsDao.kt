@@ -6,6 +6,11 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles
 
+/**
+ * Dao - data access objects
+ *
+ * we got queries in this class to get data out of database
+ */
 @Dao
 interface NewsDao {
 

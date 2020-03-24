@@ -6,6 +6,9 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+/**
+ * this is an interface where we define all our network  operations
+ */
 interface NewsApiService {
 
     @GET("everything")

@@ -1,5 +1,6 @@
 package com.prudhvir3ddy.dailybugle.ui.search
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +11,13 @@ import androidx.navigation.fragment.findNavController
 import com.prudhvir3ddy.dailybugle.MyApplication
 import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.ui.BaseFragment
-import com.prudhvir3ddy.dailybugle.viewmodels.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_search.view.bottom_navigation
 import kotlinx.android.synthetic.main.fragment_search.view.recycler_view_search_news
 import kotlinx.android.synthetic.main.fragment_search.view.search_input
 
+/**
+ * Search screen UI
+ */
 class SearchFragment : BaseFragment<SearchViewModel>() {
 
   override fun getViewModelClass(): Class<SearchViewModel> = SearchViewModel::class.java
@@ -43,7 +46,7 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
     viewModel.status.observe(viewLifecycleOwner, Observer {
       if (it) {
         findNavController().navigate(
-            SearchFragmentDirections.actionSearchFragmentToNoInternetFragment()
+          SearchFragmentDirections.actionSearchFragmentToNoInternetFragment()
         )
         viewModel.resetStatus()
       }
@@ -78,6 +81,12 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
       }
     }
     return rootView
+  }
+
+  override fun onAttach(context: Context) {
+    super.onAttach(context)
+    (context.applicationContext as MyApplication).appComponent.inject(this);
+
   }
 
 }

@@ -8,6 +8,10 @@ import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
+/**
+ * To generate dagger app component
+ * we define all starting points of graph here
+ */
 @Singleton
 @Component(modules = [AppModule::class, ViewModelModule::class])
 interface AppComponent {

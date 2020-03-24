@@ -8,6 +8,10 @@ import androidx.room.TypeConverters
 import com.prudhvir3ddy.dailybugle.database.data.Converters
 import com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles
 
+/**
+ * Main Database configuration of app here
+ * it's a singleton class
+ */
 @Database(entities = [UIDatabaseArticles::class], version = 1, exportSchema = false)
 @TypeConverters(value = [Converters::class])
 abstract class NewsDatabase : RoomDatabase() {
@@ -35,7 +39,6 @@ abstract class NewsDatabase : RoomDatabase() {
 
                 }
                 return instance
-
 
             }
 

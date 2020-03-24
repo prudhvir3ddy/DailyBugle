@@ -1,4 +1,4 @@
-package com.prudhvir3ddy.dailybugle.viewmodels
+package com.prudhvir3ddy.dailybugle.ui.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +11,11 @@ import com.prudhvir3ddy.dailybugle.utils.asDatabaseModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel for search fragment
+ * viewmodels are independent of UI
+ * so all logics goes in here and it is supposed to  provide data to UI
+ */
 class SearchViewModel @Inject constructor(
   private val newsApiService: NewsApiService
 ) : ViewModel() {
