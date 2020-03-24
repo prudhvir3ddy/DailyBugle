@@ -15,6 +15,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
 
+/**
+ * android instrumentation test
+ * checking whether database is working or not
+ */
 @RunWith(AndroidJUnit4::class)
 class ResponseNewsDatabaseTest {
 
@@ -24,6 +28,9 @@ class ResponseNewsDatabaseTest {
     @get: Rule
     val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
+    /**
+     * creating database before running the test which is in memory so it's volatile
+     */
     @Before
     fun createDb() {
 
@@ -36,6 +43,9 @@ class ResponseNewsDatabaseTest {
         newsDao = newsDatabase.newsDatabaseDao
     }
 
+    /**
+     * closing database once the tests are completed
+     */
     @After
     @Throws(IOException::class)
     fun closeDb() {

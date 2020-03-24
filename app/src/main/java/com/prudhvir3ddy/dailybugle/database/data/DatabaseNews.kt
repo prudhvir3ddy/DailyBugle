@@ -65,6 +65,9 @@ data class DatabaseArticleSource(
  * as we can't store the complex objects in room database
  */
 class Converters {
+  /**
+   * this converts passed jsonObjects to strings for storing in database
+   */
   @TypeConverter
   fun fromArticleSourceToJson(value: DatabaseArticleSource): String {
     val moshi = Moshi.Builder()
@@ -74,6 +77,10 @@ class Converters {
     return jsonAdapter.toJson(value)
   }
 
+  /**
+   * reverse of above function, when retrieving the values we can
+   * again convert back from string to json object
+   */
   @TypeConverter
   fun fromJsonToArticleSource(json: String): DatabaseArticleSource {
     val moshi = Moshi.Builder()

@@ -22,6 +22,9 @@ abstract class NewsDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: NewsDatabase? = null
 
+        /**
+         * getting the database instance, this is common to whole app
+         */
         fun getInstance(context: Context): NewsDatabase {
             synchronized(this) {
 

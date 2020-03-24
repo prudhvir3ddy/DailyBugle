@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.prudhvir3ddy.dailybugle.utils.ViewModelFactory
 import javax.inject.Inject
 
+/**
+ * base fragment all common code in fragments goes here
+ */
 abstract class BaseFragment<VM : ViewModel> : Fragment() {
   lateinit var viewModel: VM
 

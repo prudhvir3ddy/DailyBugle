@@ -6,6 +6,9 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
+/**
+ * For monitoring livedata this is an util function
+ */
 fun <T> LiveData<T>.getOrAwaitValue(
   time: Long = 2,
   timeUnit: TimeUnit = TimeUnit.SECONDS

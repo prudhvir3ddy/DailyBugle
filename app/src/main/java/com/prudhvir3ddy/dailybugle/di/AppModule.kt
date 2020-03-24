@@ -21,6 +21,7 @@ import javax.inject.Singleton
 @Module
 class AppModule {
 
+  //providing retrofit, used for networking
   @Provides
   @Singleton
   fun provideRetrofit(moshi: Moshi): Retrofit {
@@ -30,6 +31,7 @@ class AppModule {
       .build()
   }
 
+  //providing moshi, helps in type converting
   @Provides
   @Singleton
   fun provideMoshi(): Moshi {
@@ -38,18 +40,21 @@ class AppModule {
       .build()
   }
 
+  //providing api service, this helps to call network functions in this service
   @Provides
   @Singleton
   fun provideApiService(retrofit: Retrofit): NewsApiService {
     return retrofit.create(NewsApiService::class.java)
   }
 
+  //providing sharedpreferences for storing country value
   @Provides
   @Singleton
   fun provideSharedPreferences(context: Context): SharedPreferences {
     return PreferenceManager.getDefaultSharedPreferences(context)
   }
 
+  //providing room database dao for accessing data in database
   @Singleton
   @Provides
   fun provideRoomDatabase(context: Context): NewsDao {

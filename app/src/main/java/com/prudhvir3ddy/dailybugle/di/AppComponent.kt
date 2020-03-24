@@ -23,6 +23,9 @@ interface AppComponent {
     fun create(@BindsInstance context: Context): AppComponent
   }
 
+  /**
+   * inject all activities and fragments here
+   */
   fun inject(homeFragment: HomeFragment)
   fun inject(mainActivity: MainActivity)
   fun inject(searchFragment: SearchFragment)
