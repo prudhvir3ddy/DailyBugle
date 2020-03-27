@@ -27,3 +27,12 @@
     <td><img src="screenshots/ss4.png" width=360 height=640></td>
   </tr>
  </table>
+
+## local setup instructions 
+Go to http://newsapi.org/ and generate your API key there and 
+append to your local.properties like this
+```
+sdk.dir=/Users/prudhvimekala/Library/Android/sdk
+api.news= ADD_YOUR_API_KEY_HERE
+```
+
