@@ -29,10 +29,10 @@ class Repository @Inject constructor(
       )
     val resultList = getTopHeadLinesDeferred.body()
     database.clear(country)
-    val listResult = resultList!!.articles.map {
+    val listResult = resultList?.articles?.map {
       it.asDatabaseModel(country)
     }
-    database.insert(listResult)
+      database.insert(listResult?:listOf())
   }
 
   /**
