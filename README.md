@@ -5,6 +5,16 @@
 [![CircleCI](https://circleci.com/gh/prudhvir3ddy/DailyBugle.svg?style=svg)](https://circleci.com/gh/prudhvir3ddy/DailyBugle)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9d6681bbadc74f86b255b4bc10af554c)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=prudhvir3ddy/DailyBugle&amp;utm_campaign=Badge_Grade)
 
+## local setup instructions 
+Go to <http://newsapi.org/> and generate your API key there and 
+append to your local.properties like this
+
+``` groovy
+sdk.dir=YOUR_LOCAL_PATH_TO_ANDROID_SDK
+api.news=ADD_YOUR_API_KEY_HERE
+
+```
+
 ## screenshots 
 
 <table>
@@ -27,12 +37,3 @@
     <td><img src="screenshots/ss4.png" width=360 height=640></td>
   </tr>
  </table>
-
-## local setup instructions 
-Go to http://newsapi.org/ and generate your API key there and 
-append to your local.properties like this
-```
-sdk.dir=/Users/prudhvimekala/Library/Android/sdk
-api.news= ADD_YOUR_API_KEY_HERE
-```
-
