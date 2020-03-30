@@ -19,7 +19,7 @@ buildscript {
     materialDesignVersion = '1.2.0-alpha04'
     kotlinCoroutinesVersion = '1.1.0'
     retrofitCoroutinesAdapterVersion = '0.9.2'
-    retrofitVersion = '2.7.1'
+    retrofitVersion = '2.8.1'
     moshiVersion = '1.9.2'
     navVersion = '2.2.1'
     glideVersion = '4.10.0'
