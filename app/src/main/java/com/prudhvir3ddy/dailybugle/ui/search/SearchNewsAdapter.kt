@@ -1,17 +1,14 @@
 package com.prudhvir3ddy.dailybugle.ui.search
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.prudhvir3ddy.dailybugle.R.layout
-import com.prudhvir3ddy.dailybugle.bindImage
+import com.prudhvir3ddy.dailybugle.R
 import com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles
-import kotlinx.android.synthetic.main.item_news.view.main_image
-import kotlinx.android.synthetic.main.item_news.view.title
+import com.prudhvir3ddy.dailybugle.databinding.ItemNewsBinding
 
 /**
  * DiffUtil is an optimisation for recyclerview
@@ -20,15 +17,15 @@ import kotlinx.android.synthetic.main.item_news.view.title
  */
 object SearchNewsDiffCallback : DiffUtil.ItemCallback<UIDatabaseArticles>() {
   override fun areItemsTheSame(
-    oldItem: UIDatabaseArticles,
-    newItem: UIDatabaseArticles
+      oldItem: UIDatabaseArticles,
+      newItem: UIDatabaseArticles
   ): Boolean {
     return oldItem.title == newItem.title
   }
 
   override fun areContentsTheSame(
-    oldItem: UIDatabaseArticles,
-    newItem: UIDatabaseArticles
+      oldItem: UIDatabaseArticles,
+      newItem: UIDatabaseArticles
   ): Boolean {
     return oldItem == newItem
   }
@@ -38,39 +35,42 @@ object SearchNewsDiffCallback : DiffUtil.ItemCallback<UIDatabaseArticles>() {
 /**
  * viewholder of items
  */
-class ArticlesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+class ArticlesViewHolder(val itemNewsBinding: ItemNewsBinding) :
+    RecyclerView.ViewHolder(itemNewsBinding.root) {
+
+  fun bind(item: UIDatabaseArticles) {
+    itemNewsBinding.model = item
+    itemNewsBinding.executePendingBindings()
+  }
+
+}
 
 /**
  * Searched news adapter
  * to show data in recyclerview with provided data
  */
 class SearchNewsAdapter : ListAdapter<UIDatabaseArticles, ArticlesViewHolder>(
-  SearchNewsDiffCallback
+    SearchNewsDiffCallback
 ) {
 
   override fun onCreateViewHolder(
-    parent: ViewGroup,
-    viewType: Int
+      parent: ViewGroup,
+      viewType: Int
   ): ArticlesViewHolder {
-    return ArticlesViewHolder(
-      LayoutInflater.from(parent.context).inflate(
-        layout.item_news,
+    val binding: ItemNewsBinding = DataBindingUtil.inflate(
+        LayoutInflater.from(parent.context),
+        R.layout.item_news,
         parent,
         false
-      )
     )
+    return ArticlesViewHolder(binding)
   }
 
   override fun onBindViewHolder(
-    holder: ArticlesViewHolder,
-    position: Int
+      holder: ArticlesViewHolder,
+      position: Int
   ) {
-
-    val imageView: ImageView = holder.itemView.main_image
-    val url: String? = getItem(position).urlToImage
-
-    bindImage(imageView, url)
-
-    holder.itemView.title.text = getItem(position).title
+    val model = getItem(position)
+    holder.bind(model)
   }
 }

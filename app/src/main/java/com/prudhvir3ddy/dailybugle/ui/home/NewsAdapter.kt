@@ -1,17 +1,14 @@
 package com.prudhvir3ddy.dailybugle.ui.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prudhvir3ddy.dailybugle.R
-import com.prudhvir3ddy.dailybugle.bindImage
 import com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles
-import kotlinx.android.synthetic.main.item_news.view.main_image
-import kotlinx.android.synthetic.main.item_news.view.title
+import com.prudhvir3ddy.dailybugle.databinding.ItemNewsBinding
 
 /**
  * DiffUtil is an optimisation for recyclerview
@@ -20,15 +17,15 @@ import kotlinx.android.synthetic.main.item_news.view.title
  */
 object NewsDiffCallback : DiffUtil.ItemCallback<UIDatabaseArticles>() {
   override fun areItemsTheSame(
-    oldItem: UIDatabaseArticles,
-    newItem: UIDatabaseArticles
+      oldItem: UIDatabaseArticles,
+      newItem: UIDatabaseArticles
   ): Boolean {
     return oldItem.title == newItem.title
   }
 
   override fun areContentsTheSame(
-    oldItem: UIDatabaseArticles,
-    newItem: UIDatabaseArticles
+      oldItem: UIDatabaseArticles,
+      newItem: UIDatabaseArticles
   ): Boolean {
     return oldItem == newItem
   }
@@ -41,37 +38,37 @@ object NewsDiffCallback : DiffUtil.ItemCallback<UIDatabaseArticles>() {
  * and UI that shows up
  */
 class NewsAdapter : ListAdapter<UIDatabaseArticles, NewsAdapter.NewsViewHolder>(
-  NewsDiffCallback
+    NewsDiffCallback
 ) {
 
   /**
    * view holder for the items
    */
-  class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+  class NewsViewHolder(private val itemNewsBinding: ItemNewsBinding)
+    : RecyclerView.ViewHolder(itemNewsBinding.root) {
+
+    fun bind(item: UIDatabaseArticles) {
+      itemNewsBinding.model = item
+      itemNewsBinding.executePendingBindings()
+    }
+
+  }
 
   override fun onCreateViewHolder(
-    parent: ViewGroup,
-    viewType: Int
+      parent: ViewGroup,
+      viewType: Int
   ): NewsViewHolder {
-    return NewsViewHolder(
-      LayoutInflater.from(parent.context).inflate(
-        R.layout.item_news,
-        parent,
-        false
-      )
-    )
+
+    val binding: ItemNewsBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
+        R.layout.item_news, parent, false)
+    return NewsViewHolder(binding)
   }
 
   override fun onBindViewHolder(
-    holder: NewsViewHolder,
-    position: Int
+      holder: NewsViewHolder,
+      position: Int
   ) {
-
-    val imageView: ImageView = holder.itemView.main_image
-    val url: String? = getItem(position).urlToImage
-
-    bindImage(imageView, url)
-
-    holder.itemView.title.text = getItem(position).title
+    val model = getItem(position)
+    holder.bind(model)
   }
 }
