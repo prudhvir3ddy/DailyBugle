@@ -35,7 +35,7 @@ object SearchNewsDiffCallback : DiffUtil.ItemCallback<UIDatabaseArticles>() {
 /**
  * viewholder of items
  */
-class ArticlesViewHolder(val itemNewsBinding: ItemNewsBinding) :
+class ArticlesViewHolder(private val itemNewsBinding: ItemNewsBinding) :
     RecyclerView.ViewHolder(itemNewsBinding.root) {
 
   fun bind(item: UIDatabaseArticles) {

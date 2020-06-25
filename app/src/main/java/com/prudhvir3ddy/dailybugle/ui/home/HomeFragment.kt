@@ -5,92 +5,91 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.prudhvir3ddy.dailybugle.MyApplication
 import com.prudhvir3ddy.dailybugle.R
+import com.prudhvir3ddy.dailybugle.databinding.FragmentHomeBinding
 import com.prudhvir3ddy.dailybugle.ui.BaseFragment
-import kotlinx.android.synthetic.main.fragment_home.recycler_view_top_news
-import kotlinx.android.synthetic.main.fragment_home.swipe_refresh
-import kotlinx.android.synthetic.main.fragment_home.view.bottom_navigation
-import kotlinx.android.synthetic.main.fragment_home.view.recycler_view_top_news
-import kotlinx.android.synthetic.main.fragment_home.view.swipe_refresh
+import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
  * top headlines screen UI
  */
 class HomeFragment : BaseFragment<HomeViewModel>() {
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-    val rootView: View = inflater.inflate(R.layout.fragment_home, container, false)
+        val binding: FragmentHomeBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-    initRootView(rootView)
-    addObservers()
-    return rootView
-  }
+        initRootView(binding)
+        addObservers()
+        return binding.root
+    }
 
-  private fun addObservers() {
-    viewModel.topNews.observe(viewLifecycleOwner, Observer {
-      val adapter = recycler_view_top_news.adapter as NewsAdapter
-      adapter.apply {
-        submitList(it)
-      }
-      swipe_refresh.isRefreshing = false
-    })
+    private fun addObservers() {
+        viewModel.topNews.observe(viewLifecycleOwner, Observer {
+            val adapter = recycler_view_top_news.adapter as NewsAdapter
+            adapter.apply {
+                submitList(it)
+            }
+            swipe_refresh.isRefreshing = false
+        })
 
-    viewModel.status.observe(viewLifecycleOwner, Observer {
-      if (it) {
-        findNavController().navigate(
-          HomeFragmentDirections.actionHomeFragmentToNoInternetFragment()
-        )
-        viewModel.resetStatus()
-      }
-    })
-  }
+        viewModel.status.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToNoInternetFragment()
+                )
+                viewModel.resetStatus()
+            }
+        })
+    }
 
-  fun initRootView(rootView: View) {
-    val newsAdapter = NewsAdapter()
+    private fun initRootView(rootView: FragmentHomeBinding) {
+        val newsAdapter = NewsAdapter()
 
-    rootView.apply {
+        rootView.apply {
 
-      recycler_view_top_news.adapter = newsAdapter
+            recyclerViewTopNews.adapter = newsAdapter
 
-      swipe_refresh.isRefreshing = true
+            swipeRefresh.isRefreshing = true
 
-      swipe_refresh.setOnRefreshListener {
-        viewModel.getData()
-      }
+            swipeRefresh.setOnRefreshListener {
+                viewModel.getData()
+            }
 
-      bottom_navigation.setOnNavigationItemSelectedListener {
-        when (it.itemId) {
+            bottomNavigation.setOnNavigationItemSelectedListener {
+                when (it.itemId) {
 
-          R.id.menu_item_search -> {
-            val action =
-              HomeFragmentDirections.actionHomeFragmentToSearchFragment()
-            findNavController().navigate(action)
-          }
-          R.id.menu_item_save -> {
-            val action =
-              HomeFragmentDirections.actionHomeFragmentToSaveFragment()
-            findNavController().navigate(action)
-          }
+                    R.id.menu_item_search -> {
+                        val action =
+                            HomeFragmentDirections.actionHomeFragmentToSearchFragment()
+                        findNavController().navigate(action)
+                    }
+                    R.id.menu_item_save -> {
+                        val action =
+                            HomeFragmentDirections.actionHomeFragmentToSaveFragment()
+                        findNavController().navigate(action)
+                    }
+                }
+                false
+            }
+
         }
-        false
-      }
 
     }
 
-  }
+    override fun getViewModelClass(): Class<HomeViewModel> = HomeViewModel::class.java
 
-  override fun getViewModelClass(): Class<HomeViewModel> = HomeViewModel::class.java
-
-  override fun onAttach(context: Context) {
-    super.onAttach(context)
-    (context.applicationContext as MyApplication).appComponent.inject(this);
-  }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (context.applicationContext as MyApplication).appComponent.inject(this);
+    }
 }
