@@ -5,6 +5,21 @@
 [![CircleCI](https://circleci.com/gh/prudhvir3ddy/DailyBugle.svg?style=svg)](https://circleci.com/gh/prudhvir3ddy/DailyBugle)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9d6681bbadc74f86b255b4bc10af554c)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=prudhvir3ddy/DailyBugle&amp;utm_campaign=Badge_Grade)
 
+## local setup instructions 
+Go to <http://newsapi.org/> and generate your API key there and 
+append to your local.properties like this
+
+``` groovy
+sdk.dir=YOUR_LOCAL_PATH_TO_ANDROID_SDK
+api.news=ADD_YOUR_API_KEY_HERE
+
+```
+
+## Architecture
+This app uses [***MVVM (Model View View-Model)***](https://developer.android.com/jetpack/docs/guide#recommended-app-arch) architecture.
+
+![](https://developer.android.com/topic/libraries/architecture/images/final-architecture.png)
+
 ## screenshots 
 
 <table>
