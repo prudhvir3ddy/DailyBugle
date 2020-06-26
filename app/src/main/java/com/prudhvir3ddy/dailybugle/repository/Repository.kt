@@ -2,7 +2,7 @@ package com.prudhvir3ddy.dailybugle.repository
 
 import android.content.Context
 import com.prudhvir3ddy.dailybugle.BuildConfig
-import com.prudhvir3ddy.dailybugle.database.NewsDao
+import com.prudhvir3ddy.dailybugle.database.dao.NewsDao
 import com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles
 import com.prudhvir3ddy.dailybugle.network.Connection
 import com.prudhvir3ddy.dailybugle.network.NewsApiService
@@ -32,7 +32,7 @@ class Repository @Inject constructor(
     val listResult = resultList?.articles?.map {
       it.asDatabaseModel(country)
     }
-      database.insert(listResult?:listOf())
+    database.insert(listResult ?: listOf())
   }
 
   /**

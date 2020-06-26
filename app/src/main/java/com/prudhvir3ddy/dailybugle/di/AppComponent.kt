@@ -2,7 +2,9 @@ package com.prudhvir3ddy.dailybugle.di
 
 import android.content.Context
 import com.prudhvir3ddy.dailybugle.MainActivity
+import com.prudhvir3ddy.dailybugle.ui.detail.DetailFragment
 import com.prudhvir3ddy.dailybugle.ui.home.HomeFragment
+import com.prudhvir3ddy.dailybugle.ui.saved.SaveFragment
 import com.prudhvir3ddy.dailybugle.ui.search.SearchFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -36,4 +38,6 @@ interface AppComponent {
 
   fun inject(mainActivity: MainActivity)
   fun inject(searchFragment: SearchFragment)
+  fun inject(savedFragment: SaveFragment)
+  fun inject(detailFragment: DetailFragment)
 }

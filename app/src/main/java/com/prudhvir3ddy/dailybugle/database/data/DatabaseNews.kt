@@ -1,10 +1,12 @@
 package com.prudhvir3ddy.dailybugle.database.data
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import com.squareup.moshi.JsonClass
 import com.squareup.moshi.Moshi
+import kotlinx.android.parcel.Parcelize
 
 /**
  * data classes are POJO classes in kotlin
@@ -21,6 +23,7 @@ data class DatabaseNews(
  * because we are going to use this classes to show in the UI
  * and this class acts as database table
  */
+@Parcelize
 @Entity(tableName = "articles")
 data class UIDatabaseArticles(
   val source: DatabaseArticleSource,
@@ -33,7 +36,7 @@ data class UIDatabaseArticles(
   val urlToImage: String?,
   val publishedAt: String,
   val content: String?
-)
+) : Parcelable
 
 /**
  * saved articles table
@@ -53,12 +56,12 @@ data class SavedArticles(
   val content: String?
 )
 
-
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class DatabaseArticleSource(
-    val id: String?,
-    val name: String
-)
+  val id: String?,
+  val name: String
+) : Parcelable
 
 /**
  * converter classes

@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.prudhvir3ddy.dailybugle.database.dao.NewsDao
 import com.prudhvir3ddy.dailybugle.database.data.DatabaseArticleSource
 import com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles
 import kotlinx.coroutines.runBlocking
@@ -22,35 +23,35 @@ import java.io.IOException
 @RunWith(AndroidJUnit4::class)
 class ResponseNewsDatabaseTest {
 
-    private lateinit var newsDao: NewsDao
-    private lateinit var newsDatabase: NewsDatabase
+  private lateinit var newsDao: NewsDao
+  private lateinit var newsDatabase: NewsDatabase
 
-    @get: Rule
-    val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
+  @get: Rule
+  val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
-    /**
-     * creating database before running the test which is in memory so it's volatile
-     */
-    @Before
-    fun createDb() {
+  /**
+   * creating database before running the test which is in memory so it's volatile
+   */
+  @Before
+  fun createDb() {
 
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
+    val context = InstrumentationRegistry.getInstrumentation().targetContext
 
-        newsDatabase = Room.inMemoryDatabaseBuilder(context, NewsDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
+    newsDatabase = Room.inMemoryDatabaseBuilder(context, NewsDatabase::class.java)
+      .allowMainThreadQueries()
+      .build()
 
-        newsDao = newsDatabase.newsDatabaseDao
-    }
+    newsDao = newsDatabase.newsDatabaseDao
+  }
 
-    /**
-     * closing database once the tests are completed
-     */
-    @After
-    @Throws(IOException::class)
-    fun closeDb() {
-        newsDatabase.close()
-    }
+  /**
+   * closing database once the tests are completed
+   */
+  @After
+  @Throws(IOException::class)
+  fun closeDb() {
+    newsDatabase.close()
+  }
 
   /**
    * tests whether database is working as expected

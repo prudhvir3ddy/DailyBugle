@@ -26,4 +26,5 @@ abstract class BaseFragment<VM : ViewModel> : Fragment() {
   }
 
   abstract fun getViewModelClass(): Class<VM>
+
 }

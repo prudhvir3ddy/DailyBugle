@@ -18,10 +18,13 @@
     <action
         android:id="@+id/action_homeFragment_to_noInternetFragment"
         app:destination="@id/noInternetFragment" />
+    <action
+        android:id="@+id/action_homeFragment_to_detailFragment"
+        app:destination="@id/detailFragment" />
   </fragment>
   <fragment
       android:id="@+id/saveFragment"
-      android:name="com.prudhvir3ddy.dailybugle.ui.SaveFragment"
+      android:name="com.prudhvir3ddy.dailybugle.ui.saved.SaveFragment"
       android:label="fragment_save"
       tools:layout="@layout/fragment_save">
     <action
@@ -30,6 +33,9 @@
     <action
         android:id="@+id/action_saveFragment_to_searchFragment"
         app:destination="@id/searchFragment" />
+    <action
+        android:id="@+id/action_saveFragment_to_detailFragment"
+        app:destination="@id/detailFragment" />
   </fragment>
   <fragment
       android:id="@+id/searchFragment"
@@ -45,6 +51,9 @@
     <action
         android:id="@+id/action_searchFragment_to_noInternetFragment"
         app:destination="@id/noInternetFragment" />
+    <action
+        android:id="@+id/action_searchFragment_to_detailFragment"
+        app:destination="@id/detailFragment" />
   </fragment>
   <fragment
       android:id="@+id/noInternetFragment"
@@ -54,5 +63,13 @@
     <action
         android:id="@+id/action_noInternetFragment_to_homeFragment"
         app:destination="@id/homeFragment" />
+  </fragment>
+  <fragment
+      android:id="@+id/detailFragment"
+      android:name="com.prudhvir3ddy.dailybugle.ui.detail.DetailFragment"
+      android:label="DetailFragment">
+    <argument
+        android:name="news_item"
+        app:argType="com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles" />
   </fragment>
 </navigation>

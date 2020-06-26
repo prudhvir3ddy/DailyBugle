@@ -1,4 +1,4 @@
-package com.prudhvir3ddy.dailybugle.ui.search
+package com.prudhvir3ddy.dailybugle.ui.saved
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prudhvir3ddy.dailybugle.R
-import com.prudhvir3ddy.dailybugle.database.data.UIDatabaseArticles
+import com.prudhvir3ddy.dailybugle.database.data.SavedArticles
 import com.prudhvir3ddy.dailybugle.databinding.ItemNewsBinding
 
 /**
@@ -15,17 +15,17 @@ import com.prudhvir3ddy.dailybugle.databinding.ItemNewsBinding
  * read more here:
  * https://developer.android.com/reference/kotlin/androidx/recyclerview/widget/DiffUtil
  */
-object SearchNewsDiffCallback : DiffUtil.ItemCallback<UIDatabaseArticles>() {
+object SearchNewsDiffCallback : DiffUtil.ItemCallback<SavedArticles>() {
   override fun areItemsTheSame(
-    oldItem: UIDatabaseArticles,
-    newItem: UIDatabaseArticles
+    oldItem: SavedArticles,
+    newItem: SavedArticles
   ): Boolean {
     return oldItem.title == newItem.title
   }
 
   override fun areContentsTheSame(
-    oldItem: UIDatabaseArticles,
-    newItem: UIDatabaseArticles
+    oldItem: SavedArticles,
+    newItem: SavedArticles
   ): Boolean {
     return oldItem == newItem
   }
@@ -36,10 +36,10 @@ object SearchNewsDiffCallback : DiffUtil.ItemCallback<UIDatabaseArticles>() {
  * viewholder of items
  */
 class ArticlesViewHolder(private val itemNewsBinding: ItemNewsBinding) :
-    RecyclerView.ViewHolder(itemNewsBinding.root) {
+  RecyclerView.ViewHolder(itemNewsBinding.root) {
 
-  fun bind(item: UIDatabaseArticles) {
-    itemNewsBinding.model = item
+  fun bind(item: SavedArticles) {
+    //TODO itemNewsBinding.model = item
     itemNewsBinding.executePendingBindings()
   }
 
@@ -49,8 +49,8 @@ class ArticlesViewHolder(private val itemNewsBinding: ItemNewsBinding) :
  * Searched news adapter
  * to show data in recyclerview with provided data
  */
-class SearchNewsAdapter : ListAdapter<UIDatabaseArticles, ArticlesViewHolder>(
-    SearchNewsDiffCallback
+class SavedNewsAdapter : ListAdapter<SavedArticles, ArticlesViewHolder>(
+  SearchNewsDiffCallback
 ) {
 
   override fun onCreateViewHolder(
@@ -58,10 +58,10 @@ class SearchNewsAdapter : ListAdapter<UIDatabaseArticles, ArticlesViewHolder>(
     viewType: Int
   ): ArticlesViewHolder {
     val binding: ItemNewsBinding = DataBindingUtil.inflate(
-        LayoutInflater.from(parent.context),
-        R.layout.item_news,
-        parent,
-        false
+      LayoutInflater.from(parent.context),
+      R.layout.item_news,
+      parent,
+      false
     )
     return ArticlesViewHolder(binding)
   }

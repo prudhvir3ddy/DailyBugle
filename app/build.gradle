@@ -30,7 +30,6 @@ def isSignConfigExists = keyAliasToken && keyPasswordToken && storeFileToken && 
 
 android {
   compileSdkVersion 29
-  buildToolsVersion "29.0.2"
 
   defaultConfig {
     applicationId "com.prudhvir3ddy.dailybugle"
@@ -73,6 +72,9 @@ android {
     sourceCompatibility = "1.8"
     targetCompatibility = "1.8"
   }
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
 }
 
 dependencies {
@@ -80,7 +82,7 @@ dependencies {
 
   implementation "androidx.appcompat:appcompat:$appCompatVersion"
   implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-  implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+  implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
   //kotlin
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
@@ -97,6 +99,8 @@ dependencies {
 
   //moshi
   implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+  implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+  implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
   kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 
   //coroutines

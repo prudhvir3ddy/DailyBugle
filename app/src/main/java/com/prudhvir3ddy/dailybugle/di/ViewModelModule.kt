@@ -2,7 +2,9 @@ package com.prudhvir3ddy.dailybugle.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.prudhvir3ddy.dailybugle.ui.detail.DetailViewModel
 import com.prudhvir3ddy.dailybugle.ui.home.HomeViewModel
+import com.prudhvir3ddy.dailybugle.ui.saved.SavedViewModel
 import com.prudhvir3ddy.dailybugle.ui.search.SearchViewModel
 import com.prudhvir3ddy.dailybugle.utils.ViewModelFactory
 import dagger.Binds
@@ -36,5 +38,15 @@ abstract class ViewModelModule {
   @IntoMap
   @ViewModelScope(SearchViewModel::class)
   abstract fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
+
+  @Binds
+  @IntoMap
+  @ViewModelScope(SavedViewModel::class)
+  abstract fun bindSavedViewModel(savedViewModel: SavedViewModel): ViewModel
+
+  @Binds
+  @IntoMap
+  @ViewModelScope(DetailViewModel::class)
+  abstract fun bindDetailViewModel(detailViewModel: DetailViewModel): ViewModel
 
 }

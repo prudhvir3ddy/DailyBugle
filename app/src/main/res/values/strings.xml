@@ -23,4 +23,5 @@
   <string name="country_title">country</string>
   <string name="retry">RETRY</string>
   <string name="save_fragment">Save Fragment</string>
+  <string name="saved_articles_label">Saved Articles</string>
 </resources>

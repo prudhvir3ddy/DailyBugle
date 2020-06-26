@@ -5,13 +5,6 @@
     tools:context=".ui.search.SearchFragment"
     >
 
-  <data>
-
-    <variable
-        name="viewModel"
-        type="com.prudhvir3ddy.dailybugle.ui.search.SearchViewModel"
-        />
-  </data>
 
   <FrameLayout
       android:layout_width="match_parent"

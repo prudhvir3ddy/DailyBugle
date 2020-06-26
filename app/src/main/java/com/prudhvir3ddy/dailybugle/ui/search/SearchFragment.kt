@@ -19,74 +19,66 @@ import com.prudhvir3ddy.dailybugle.ui.BaseFragment
  */
 class SearchFragment : BaseFragment<SearchViewModel>() {
 
-    override fun getViewModelClass(): Class<SearchViewModel> = SearchViewModel::class.java
+  override fun getViewModelClass(): Class<SearchViewModel> = SearchViewModel::class.java
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        (context?.applicationContext as MyApplication).appComponent.inject(this)
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View {
 
-        super.onCreate(savedInstanceState)
-    }
+    val binding: FragmentSearchBinding =
+      DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    val searchNewsAdapter = SearchNewsAdapter()
 
-        val binding: FragmentSearchBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
-
-        val searchNewsAdapter = SearchNewsAdapter()
-
-        viewModel.foundNews.observe(viewLifecycleOwner, Observer {
-            searchNewsAdapter.submitList(it)
-        })
+    viewModel.foundNews.observe(viewLifecycleOwner, Observer {
+      searchNewsAdapter.submitList(it)
+    })
 
 
-        viewModel.status.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                findNavController().navigate(
-                    SearchFragmentDirections.actionSearchFragmentToNoInternetFragment()
-                )
-                viewModel.resetStatus()
-            }
-        })
+    viewModel.status.observe(viewLifecycleOwner, Observer {
+      if (it) {
+        findNavController().navigate(
+          SearchFragmentDirections.actionSearchFragmentToNoInternetFragment()
+        )
+        viewModel.resetStatus()
+      }
+    })
 
-        binding.apply {
-            searchInput.setOnEditorActionListener { v, actionId, event ->
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    viewModel.searchNews(searchInput.text.toString())
-                    searchInput.text.clear()
-                }
-                false
-            }
-            recyclerViewSearchNews.adapter = searchNewsAdapter
-
-
-            bottomNavigation.setOnNavigationItemSelectedListener {
-                when (it.itemId) {
-
-                    R.id.menu_item_home -> {
-                        val action =
-                            SearchFragmentDirections.actionSearchFragmentToHomeFragment()
-                        findNavController().navigate(action)
-                    }
-                    R.id.menu_item_save -> {
-                        val action =
-                            SearchFragmentDirections.actionSearchFragmentToSaveFragment()
-                        findNavController().navigate(action)
-                    }
-                }
-                false
-            }
+    binding.apply {
+      searchInput.setOnEditorActionListener { _, actionId, _ ->
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+          viewModel.searchNews(searchInput.text.toString())
+          searchInput.text.clear()
         }
-        return binding.root
+        false
+      }
+      recyclerViewSearchNews.adapter = searchNewsAdapter
+
+
+      bottomNavigation.setOnNavigationItemSelectedListener {
+        when (it.itemId) {
+
+          R.id.menu_item_home -> {
+            val action =
+              SearchFragmentDirections.actionSearchFragmentToHomeFragment()
+            findNavController().navigate(action)
+          }
+          R.id.menu_item_save -> {
+            val action =
+              SearchFragmentDirections.actionSearchFragmentToSaveFragment()
+            findNavController().navigate(action)
+          }
+        }
+        false
+      }
     }
+    return binding.root
+  }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (context.applicationContext as MyApplication).appComponent.inject(this);
-
-    }
-
+  override fun onAttach(context: Context) {
+    super.onAttach(context)
+    (context.applicationContext as MyApplication).appComponent.inject(this)
+  }
 }
